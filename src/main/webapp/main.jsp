@@ -9,12 +9,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>JSP - Hello World</title>
+    <title>J - Hello World</title>
 </head>
 <body>
-<h1><%= "Hello World!" %>
-</h1>
+<a href="/evaluation?sms=AutoCoursesEntity">evaluation</a>
 <br/>
-<a href="hello-servlet">Hello Servlet</a>
+<a href="/map">Map</a>
 </body>
 </html>
