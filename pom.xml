@@ -37,6 +37,25 @@
             <artifactId>hibernate-core</artifactId>
             <version>6.1.7.Final</version>
         </dependency>
+
+
+
+        <!-- це для геоданних -->
+        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-spatial -->
+<!--        <dependency>-->
+<!--            <groupId>org.hibernate</groupId>-->
+<!--            <artifactId>hibernate-spatial</artifactId>-->
+<!--            <version>6.1.7.Final</version>-->
+<!--        </dependency>-->
+<!--&lt;!&ndash;    Про це не писали, але по ідеї це також потрібно &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.postgis</groupId>-->
+<!--            <artifactId>postgis-jdbc</artifactId>-->
+<!--            <version>1.3.3</version>-->
+<!--        </dependency>-->
+
+
+
         <!--це сервер типу томкату. Чому він сюди додався - незрозуміло-->
 <!--        <dependency>-->
 <!--            <groupId>org.glassfish.jaxb</groupId>-->

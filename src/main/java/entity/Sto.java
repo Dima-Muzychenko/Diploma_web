@@ -1,6 +1,8 @@
 package entity;
 
 import jakarta.persistence.*;
+//import org.postgis.Point;
+//import org.locationtech.jts.geom.Point;
 
 @Entity
 @Table(name = "sto")
@@ -35,7 +37,7 @@ public class Sto {
     private String address;
 //    @Basic
 //    @Column(name = "goepossition")
-//    private Object goepossition;
+//    private Point goepossition;
     @Basic
     @Column(name = "lat")
     private Double lat;
@@ -118,11 +120,11 @@ public class Sto {
         this.address = address;
     }
 
-//    public Object getGoepossition() {
+//    public Point getGoepossition() {
 //        return goepossition;
 //    }
 //
-//    public void setGoepossition(Object goepossition) {
+//    public void setGoepossition(Point goepossition) {
 //        this.goepossition = goepossition;
 //    }
 

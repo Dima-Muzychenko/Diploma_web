@@ -4,9 +4,8 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Root;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -29,7 +28,7 @@ public class TestEntity {
         manager.getTransaction().begin();
 
         CriteriaBuilder builder  = manager.getCriteriaBuilder();
-        CriteriaQuery<Sto> query = builder .createQuery(Sto.class);
+        CriteriaQuery<Sto> query = builder.createQuery(Sto.class);
         Root<Sto> root = query.from(Sto.class);
 
         double earthRadius = 6371.0; // Earth's radius in kilometers
@@ -50,6 +49,7 @@ public class TestEntity {
                 / Math.cos(latitudeRadians)));
 
         query.select(root).where(
+
                 builder.between(root.get("lat"), minLatitude, maxLatitude),
                 builder.between(root.get("lon"), minLongitude, maxLongitude)
         );
@@ -61,6 +61,50 @@ public class TestEntity {
         manager.close();
         factory.close();
         return results;
+
+
+//        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
+//        EntityManager em = entityManagerFactory.createEntityManager();
+//        CriteriaBuilder cb = em.getCriteriaBuilder();
+//        CriteriaQuery<Sto> cq = cb.createQuery(Sto.class);
+//        Root<Sto> sto = cq.from(Sto.class);
+//
+//        Expression<Double> longitudeParam = cb.parameter(Double.class);
+//        Expression<Double> latitudeParam = cb.parameter(Double.class);
+//        Expression<Double> rangeParam = cb.parameter(Double.class);
+//        Path<Double> stoLongitude = sto.get("geolocation").get("longitude");
+//        Path<Double> stoLatitude = sto.get("geolocation").get("latitude");
+//
+////      SQL restriction to call the ST_DWithin function of PostGIS, which checks whether a given
+////      point falls within a specified distance of another point. The ST_SetSRID function is used
+////      to set the SRID (Spatial Reference Identifier) of the point to 4326, which is the SRID for
+////      the WGS84 coordinate system used by GPS. The DoubleType is used to specify the data type of
+////      the latitude, longitude, and range parameters.
+//        Predicate withinRange = cb.function(
+//                "ST_DWithin",
+//                Boolean.class,
+//                sto.get("geolocation"),
+//                cb.function(
+//                        "ST_SetSRID",
+//                        Object.class,
+//                        cb.function("ST_Point", Object.class, longitudeParam, latitudeParam),
+//                        cb.literal(4326)
+//                ),
+//                rangeParam
+//        );
+//
+//        cq.select(sto).where(withinRange);
+//
+//        TypedQuery<Sto> query = em.createQuery(cq);
+//        query.setParameter(longitudeParam, longitude);
+//        query.setParameter(latitudeParam, latitude);
+//        query.setParameter(rangeParam, range);
+//
+//        List<Sto> results = query.getResultList();
+//
+//        em.close();
+//
+//        return results;
 
     }
 
