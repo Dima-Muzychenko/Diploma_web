@@ -2,7 +2,7 @@ package entity;
 
 import jakarta.persistence.*;
 //import org.postgis.Point;
-//import org.locationtech.jts.geom.Point;
+////import org.locationtech.jts.geom.Point;
 
 @Entity
 @Table(name = "sto")
@@ -36,8 +36,8 @@ public class Sto {
     @Column(name = "address")
     private String address;
 //    @Basic
-//    @Column(name = "goepossition")
-//    private Point goepossition;
+//    @Column(name = "location", columnDefinition = "geometry(Point,4326)")
+//    private Point location;
     @Basic
     @Column(name = "lat")
     private Double lat;
@@ -48,6 +48,25 @@ public class Sto {
     @Column(name = "result_value")
     private String resultValue;
 
+//    public Sto(int infoId, String name, String owner, Integer quality, Integer speed, Integer price, Integer serviceRange, Double evaluation, String address, Point location, Double lat, Double lon, String resultValue) {
+//        this.infoId = infoId;
+//        this.name = name;
+//        this.owner = owner;
+//        this.quality = quality;
+//        this.speed = speed;
+//        this.price = price;
+//        this.serviceRange = serviceRange;
+//        this.evaluation = evaluation;
+//        this.address = address;
+//        this.location = location;
+//        this.lat = lat;
+//        this.lon = lon;
+//        this.resultValue = resultValue;
+//    }
+
+    public Sto(){
+
+    }
     public int getInfoId() {
         return infoId;
     }
@@ -121,11 +140,11 @@ public class Sto {
     }
 
 //    public Point getGoepossition() {
-//        return goepossition;
+//        return location;
 //    }
 //
 //    public void setGoepossition(Point goepossition) {
-//        this.goepossition = goepossition;
+//        this.location = goepossition;
 //    }
 
     public Double getLat() {

@@ -17,9 +17,10 @@
             <property name="hibernate.globally_quoted_identifiers" value="true"/><!--Бере всі змінні таблиці в ""-->
 
             <!--для геоданних -->
-            <!--
-            <property name="hibernate.dialect" value="org.hibernate.spatial.dialect.postgis.PostgisDialect" />
-            -->
+<!--            <property name="hibernate.dialect" value="org.hibernate.spatial.dialect.postgis.PostgisDialect"/>-->
+            <property name="hibernate.dialect" value="org.hibernate.spatial.dialect.postgis.PostgisPG10Dialect"/>
+
+
 
 
         </properties>

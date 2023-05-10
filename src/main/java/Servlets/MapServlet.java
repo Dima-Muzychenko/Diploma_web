@@ -41,33 +41,36 @@ public class MapServlet extends HttpServlet {
 
 
 
-//        EntityManagerFactory factory = Persistence.createEntityManagerFactory("default");
-//        EntityManager manager = factory.createEntityManager();
-//
-//        manager.getTransaction().begin();
-//
+        EntityManagerFactory factory = Persistence.createEntityManagerFactory("default");
+        EntityManager manager = factory.createEntityManager();
+
+        manager.getTransaction().begin();
+
 //        CriteriaBuilder builder = manager.getCriteriaBuilder();
 //        CriteriaQuery<Tuple> query = builder.createTupleQuery();
 //        Root<Sto> root = query.from(Sto.class);
 //
-//        query.multiselect(root.get("name"), root.get("geolocation"));
-//
-//        List<Tuple> results = manager.createQuery(query).getResultList();
-//        request.setAttribute("results", results);//Pass the location data to the JSP page
-//
+//        query.multiselect(root.get("name"), root.get("evaluation"));
+        CriteriaBuilder builder  = manager.getCriteriaBuilder();
+        CriteriaQuery<Sto> query = builder.createQuery(Sto.class);
+        Root<Sto> root = query.from(Sto.class);
+        query.multiselect(root.get("name"), root.get("evaluation"));
+        List<Sto> results = manager.createQuery(query).getResultList();
+        request.setAttribute("results", results);//Pass the location data to the JSP page
+
 //        for (Tuple result : results) {
 //            String name = result.get(0, String.class);
 //            Point geolocation = result.get(1, Point.class);
 //            System.out.println("Name: " + name + ", Geolocation: " + geolocation);
 //        }
-//
-//
-//        manager.getTransaction().commit();
-//        manager.close();
-//        factory.close();
-//
-//        RequestDispatcher dispatcher = request.getRequestDispatcher("/map.jsp");
-//        dispatcher.forward(request, response);
+
+
+        manager.getTransaction().commit();
+        manager.close();
+        factory.close();
+
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/map.jsp");
+        dispatcher.forward(request, response);
     }
 
     @Override
