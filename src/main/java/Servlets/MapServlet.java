@@ -1,5 +1,7 @@
 package Servlets;
 
+
+import DAO.StoDAO;
 import entity.sto;
 
 import javax.persistence.EntityManager;
@@ -9,7 +11,6 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.lang.management.ManagementFactory;
 import java.util.List;
 
 @WebServlet(name = "MapServlet", value = "/map")
@@ -18,8 +19,9 @@ public class MapServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("default");
         EntityManager manager = factory.createEntityManager();
-        List<sto> results = manager.createQuery("FROM sto ").getResultList();
-        System.out.println(results);
+        StoDAO st = new StoDAO();
+        List<sto> res = st.getAllStos();
+        System.out.println(res);
 
     }
 

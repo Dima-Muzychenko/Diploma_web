@@ -14,9 +14,9 @@
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.globally_quoted_identifiers" value="true"/><!--Бере всі змінні таблиці в "". Моя БД без лапок не працює-->
 
-            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL95Dialect" />
-            <property name="hibernate.spatial.dialect.postgis" value="org.hibernate.spatial.dialect.postgis.PostgisDialect" />
-            <property name="hibernate.temp.use_jdbc_metadata_defaults" value="false" />
+<!--            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL95Dialect" />-->
+            <property name="hibernate.spatial.dialect.postgis" value="org.hibernate.spatial.dialect.postgis.PostgisPDialect" />
+<!--            <property name="hibernate.temp.use_jdbc_metadata_defaults" value="false" />-->
 
             <!--            <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />-->
             <!--            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/Driver" />-->

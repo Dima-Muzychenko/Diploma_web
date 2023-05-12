@@ -14,7 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
-        <junit.version>5.9.1</junit.version>
+        <junit.version>5.9.2</junit.version>
     </properties>
 
     <dependencies>
@@ -38,7 +38,7 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.2.16</version>
+            <version>42.5.4</version>
         </dependency>
 
         <dependency>
@@ -53,6 +53,32 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>jstl</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/com.vividsolutions/jts &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>com.vividsolutions</groupId>-->
+<!--            <artifactId>jts</artifactId>-->
+<!--            <version>1.13</version>-->
+<!--        </dependency>-->
+
+
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/net.postgis/postgis-jdbc &ndash;&gt;-->
+        <dependency>
+            <groupId>net.postgis</groupId>
+            <artifactId>postgis-jdbc</artifactId>
+            <version>2.5.1</version>
+        </dependency>
+
+<!--        <dependency>-->
+<!--            <groupId>com.google.maps</groupId>-->
+<!--            <artifactId>google-maps-services</artifactId>-->
+<!--            <version>2.1.2</version>-->
+<!--        </dependency>-->
+
     </dependencies>
 
     <build>

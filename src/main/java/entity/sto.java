@@ -1,6 +1,7 @@
 package entity;
 
 import org.locationtech.jts.geom.Point;
+import org.postgis.Geometry;
 
 import javax.persistence.*;
 
@@ -43,9 +44,32 @@ public class sto {
     @Basic
     @Column(name = "result_value")
     private String resultValue;
-//    @Basic
-//    @Column(name = "location", columnDefinition = "geometry(Point,4326)")
-//    private Point location;
+
+//    public sto(Integer infoId, String name, String owner, Integer quality, Integer speed, Integer price, Integer serviceRange, Double evaluation, String address, Double lat, Double lon, String resultValue, Point point) {
+//        this.infoId = infoId;
+//        this.name = name;
+//        this.owner = owner;
+//        this.quality = quality;
+//        this.speed = speed;
+//        this.price = price;
+//        this.serviceRange = serviceRange;
+//        this.evaluation = evaluation;
+//        this.address = address;
+//        this.lat = lat;
+//        this.lon = lon;
+//        this.resultValue = resultValue;
+//        GeometryFactory gf = new GeometryFactory(new PrecisionModel(), 4326);
+//        this.geo = gf.createPoint(new Coordinate(lon,lat));
+//    }
+    public sto(){
+    }
+
+//    GeometryFactory gf = new GeometryFactory(new PrecisionModel(), 4326);
+//        this.geo = gf.createPoint(new Coordinate(lon,lat));
+
+    @Basic
+    @Column(name = "geo", columnDefinition = "geometry(Point, 4326)", nullable = false)
+    private Geometry geo;
 
     public Integer getInfoId() {
         return infoId;
@@ -143,12 +167,12 @@ public class sto {
         this.resultValue = resultValue;
     }
 
-//    public Object getLocation() {
-//        return location;
-//    }
-//
-//    public void setLocation(Point location) {
-//        this.location = location;
-//    }
+    public Geometry getGeo() {
+        return geo;
+    }
+
+    public void setGeo(Geometry location) {
+        this.geo = location;
+    }
 
 }
