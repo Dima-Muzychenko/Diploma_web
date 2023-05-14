@@ -20,7 +20,8 @@ public class MapServlet extends HttpServlet {
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("default");
         EntityManager manager = factory.createEntityManager();
         StoDAO st = new StoDAO();
-        List<sto> res = st.getAllStos();
+//        List<sto> res = st.getAllStos();
+        List<sto> res = st.getStosInRange(78.430, 45.15231, 10_000);
 
         manager.close();
         factory.close();
