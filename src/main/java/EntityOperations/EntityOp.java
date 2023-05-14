@@ -26,8 +26,11 @@ public class EntityOp {
 ////        Point point = gf.createPoint(new Coordinate(list.get(0).getLat(),list.get(0).getLon()));
 ////
 ////        return list;
-        StoDAO st = new StoDAO();
-        List<sto> res = st.getAllStos();
-        return res;
+
+
+//        StoDAO st = new StoDAO();
+//        List<sto> res = st.getAllStos();
+//        return res;
+        return null;
     }
 }

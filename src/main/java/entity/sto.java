@@ -1,7 +1,7 @@
 package entity;
 
 import org.locationtech.jts.geom.Point;
-import org.postgis.Geometry;
+//import org.postgis.Geometry;
 
 import javax.persistence.*;
 
@@ -69,7 +69,7 @@ public class sto {
 
     @Basic
     @Column(name = "geo", columnDefinition = "geometry(Point, 4326)", nullable = false)
-    private Geometry geo;
+    private Point geo;
 
     public Integer getInfoId() {
         return infoId;
@@ -167,11 +167,11 @@ public class sto {
         this.resultValue = resultValue;
     }
 
-    public Geometry getGeo() {
+    public Point getGeo() {
         return geo;
     }
 
-    public void setGeo(Geometry location) {
+    public void setGeo(Point location) {
         this.geo = location;
     }
 

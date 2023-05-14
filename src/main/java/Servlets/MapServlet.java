@@ -21,7 +21,10 @@ public class MapServlet extends HttpServlet {
         EntityManager manager = factory.createEntityManager();
         StoDAO st = new StoDAO();
         List<sto> res = st.getAllStos();
-        System.out.println(res);
+
+        manager.close();
+        factory.close();
+//        System.out.println(res.toString());
 
     }
 
