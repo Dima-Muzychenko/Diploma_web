@@ -43,8 +43,6 @@ public class StoDAO {
             pstmt.setDouble(2, centerLon);
             pstmt.setDouble(3, rangeInMeters); // Convert the radius from kilometers to meters
 
-            String st = pstmt.toString();
-
             ResultSet rs = pstmt.executeQuery();
 
             GetSTOList(stos, rs);

@@ -13,6 +13,7 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.util.List;
 
+
 @WebServlet(name = "MapServlet", value = "/map")
 public class MapServlet extends HttpServlet {
     @Override
@@ -25,7 +26,6 @@ public class MapServlet extends HttpServlet {
 
         manager.close();
         factory.close();
-//        System.out.println(res.toString());
 
     }
 
