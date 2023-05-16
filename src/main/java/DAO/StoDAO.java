@@ -79,43 +79,4 @@ public class StoDAO {
         }
     }
 
-//    public List<Sto> getStosInRange(double centerLat, double centerLon, double range) {
-//        List<Sto> stos = new ArrayList<>();
-//
-//        try (Connection conn = DriverManager.getConnection(url, user, password);
-//             PreparedStatement stmt = conn.prepareStatement("SELECT geo, lat, lon, name FROM sto WHERE ST_DWithin(geo, ?, ?)")) {
-//
-//            // Create a point object from the center latitude and longitude
-//            Point centerPoint = new Point(centerLon, centerLat);
-//            centerPoint.setSrid(4326);
-//
-//            // Create a box object that represents the range around the center point
-//            Geometry box = centerPoint.expand(range / 111.319, range / 111.319, true);
-//            PGboxbase pgBox = new PGboxbase(box);
-//
-//            // Set the box object as a parameter for the prepared statement
-//            stmt.setObject(1, pgBox);
-//            stmt.setDouble(2, range);
-//
-//            try (ResultSet rs = stmt.executeQuery()) {
-//                while (rs.next()) {
-//                    Sto sto = new Sto();
-//
-//                    // Get the geometry column as a PGgeometry object and convert it to a JTS Point
-//                    PGgeometry pgGeo = (PGgeometry) rs.getObject("geo");
-//                    sto.setGeo((Point) pgGeo.getGeometry());
-//
-//                    sto.setLat(rs.getDouble("lat"));
-//                    sto.setLon(rs.getDouble("lon"));
-//                    sto.setName(rs.getString("name"));
-//
-//                    stos.add(sto);
-//                }
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return stos;
-//    }
 }
