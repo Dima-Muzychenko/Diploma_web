@@ -23,6 +23,7 @@
             });
 
             var stoMarkers = [];
+            var greenStoMarkers = [];//для СТО в діапазоні
             <%
             List<sto> res = (List<sto>) request.getAttribute("res");
             for (int i = 0; i < res.size(); i++) {
@@ -93,6 +94,12 @@
     <input type="number" id="range" name="range" required>
     <button type="submit">Search</button>
 </form>
+<% List<sto> res2 = (List<sto>) request.getAttribute("res");
+    for (sto sto : res2) { %>
+<p>Name: <%= sto.getName() %></p>
+<p>Latitude: <%= sto.getGeo().getY() %></p>
+<p>Longitude: <%= sto.getGeo().getX() %></p>
+<% } %>
 </body>
 </html>
 
