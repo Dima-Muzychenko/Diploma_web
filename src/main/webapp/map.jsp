@@ -5,13 +5,46 @@
 <html>
 <head>
     <title>Map</title>
+    <style>
+        .sto-list-container {
+            height: 200px;
+            overflow-y: auto;
+        }
+        .sto-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            cursor: pointer;
+        }
+
+        .sto-item {
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #f0f0f0;
+        }
+
+        .sto-name {
+            font-weight: bold;
+        }
+
+        .sto-coordinates span, .sto-address span, .sto-evaluation span {
+            font-weight: bold;
+            color: #333;
+        }
+
+    </style>
+
+
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBHRKe3PbCrcqxerxPGfkkbcHnriCnHmOw"></script>
     <script type="text/javascript">
-        var marker; //маркер, що буде центром діапазону пошуку
-        var map
+        let marker; //маркер, що буде центром діапазону пошуку
+        let map
+        let greenStoMarkers = [];//для СТО в діапазоні
+        let stoMarkers = [];//Сочатку всі СТО, а потім СТО за діапазоном
+        let selectedMarker = false; // Flag to track if a marker is selected
         function initialize() {
             <%--var center = new google.maps.LatLng(<%= request.getAttribute("lat") %>, <%= request.getAttribute("lng") %>);--%>
-            var mapOptions = {
+            let mapOptions = {
                 zoom: 2,
                 center: {lat: 45.15231, lng: 78.430},
             };
@@ -22,19 +55,19 @@
                 placeMarker(event.latLng);
             });
 
-            var stoMarkers = [];
-            var greenStoMarkers = [];//для СТО в діапазоні
+            //рисуєм точки (всі або за межами діапазану, якщо був викликаний метод пошуку)
             <%
             List<sto> res = (List<sto>) request.getAttribute("res");
-            for (int i = 0; i < res.size(); i++) {
-                sto sto = res.get(i);
-                if (sto.getGeo() != null) { %>
+            if (res != null){
+                for (int i = 0; i < res.size(); i++) {
+                    sto sto = res.get(i);
+                    if (sto.getGeo() != null) { %>
             var position = new google.maps.LatLng(<%= sto.getGeo().getY() %>, <%= sto.getGeo().getX() %>);
             var marker = new google.maps.Marker({
                 position: position,
                 map: map,
                 title: "<%= sto.getName() %>",
-                description: "<%= sto.getName() %>",
+                description: "<%= sto.getName() %> <br> Address: <%= sto.getAddress() %> <br> Evaluation: <%= sto.getEvaluation() %>",
                 icon: {
                     path: google.maps.SymbolPath.CIRCLE,
                     fillColor: "yellow",
@@ -45,28 +78,75 @@
                 }
             });
 
-            // Add click event listener to each marker
-            marker.addListener('click', function() {
-                zoomToMarker(marker);
-            });
-
             stoMarkers.push(marker);
             <%
+                    }
                 }
             }
             %>
+            // Add click event listener to each marker
+            for (let i = 0; i < stoMarkers.length; i++){
+                stoMarkers[i].addListener('click', function() {
+                    zoomToMarker(stoMarkers[i]);
+                });
+            }
 
-            function zoomToMarker(marker) {
-                // Center the map on the marker's position
-                map.setCenter(marker.getPosition());
+            //рисуємо точки в вибраному діапазоні (якщо вибрали)
+            <%
+            List<sto> resInRange = (List<sto>) request.getAttribute("resInRange");
+            if (resInRange != null){
+                for (int i = 0; i < resInRange.size(); i++) {
+                    sto sto = resInRange.get(i);
+                    if (sto.getGeo() != null) { %>
+            var position = new google.maps.LatLng(<%= sto.getGeo().getY() %>, <%= sto.getGeo().getX() %>);
+            var marker = new google.maps.Marker({
+                position: position,
+                map: map,
+                title: "<%= sto.getName() %>",
+                description: "<%= sto.getName() %> <br> Address: <%= sto.getAddress() %> <br> Evaluation: <%= sto.getEvaluation() %>",
+                icon: {
+                    path: google.maps.SymbolPath.CIRCLE,
+                    fillColor: "green",
+                    fillOpacity: 1,
+                    strokeColor: "black",
+                    strokeWeight: 1,
+                    scale: 8
+                }
+            });
 
-                // Zoom in on the marker
-                map.setZoom(8);
+            greenStoMarkers.push(marker);
+            <%
+                    }
+                }
+            }
+            %>
+            for (let i = 0; i < greenStoMarkers.length; i++){
+                // Add click event listener to each marker
+                greenStoMarkers[i].addListener('click', function() {
+                    zoomToMarker(greenStoMarkers[i]);
+                });
+            }
+
+        }
+
+        // приближення до маркера при натисканні нанього
+        function zoomToMarker(marker) {
+            // Center the map on the marker's position
+            map.setCenter(marker.getPosition());
+            map.setZoom(10);
+        }
+
+        //Check if we have chosen marker (to search sto in radius) before searching (calling doPost method)
+        function validateForm() {
+            if (!selectedMarker) {
+                alert("Please select a marker on the map.");
+                return false; // Prevent form submission
             }
         }
 
         function placeMarker(location) {
             // Clear previous marker, if any
+            selectedMarker = true;
             if (marker) {
                 marker.setMap(null);
             }
@@ -83,23 +163,45 @@
             document.getElementById("centerLon").value = location.lng();
         }
 
+        //При натисканні на СТО зі списку перекидуємо на підходящу точку
+        function zoomToMarkerFromList(index) {
+            let marker = greenStoMarkers[index];
+            zoomToMarker(marker);
+        }
+
+
     </script>
+
 </head>
 <body onload="initialize()">
+<%--Форма для пошуку по діапазону--%>
 <div id="map-canvas" style="height: 500px;"></div>
-<form method="post" action="${pageContext.request.contextPath}/map">
+<form method="post" action="${pageContext.request.contextPath}/map" onsubmit="return validateForm()">
     <input type="hidden" id="centerLat" name="centerLat" value="">
     <input type="hidden" id="centerLon" name="centerLon" value="">
     <label for="range">Search Range (in meters):</label>
     <input type="number" id="range" name="range" required>
     <button type="submit">Search</button>
 </form>
-<% List<sto> res2 = (List<sto>) request.getAttribute("res");
-    for (sto sto : res2) { %>
-<p>Name: <%= sto.getName() %></p>
-<p>Latitude: <%= sto.getGeo().getY() %></p>
-<p>Longitude: <%= sto.getGeo().getX() %></p>
-<% } %>
+
+<%--список СТО в діапазоні--%>
+<div class="sto-list-container">
+    <% if (resInRange!=null){
+        for (int i = 0; i < resInRange.size(); i++) {
+            sto sto = resInRange.get(i);
+            if (sto.getGeo() != null) { %>
+    <ul class="sto-list" onclick="zoomToMarkerFromList(<%= i %>)">
+        <li class="sto-item">
+            <p class="sto-name">Name: <%= sto.getName() %></p>
+            <p class="sto-address">Address: <span><%= sto.getAddress() %></span></p>
+            <p class="sto-evaluation">Evaluation: <span><%= sto.getEvaluation() %></span></p>
+            <p class="sto-coordinates">Latitude: <span><%= sto.getGeo().getY() %></span></p>
+            <p class="sto-coordinates">Longitude: <span><%= sto.getGeo().getX() %></span></p>
+        </li>
+    </ul>
+    <% }}} %>
+</div>
+
 </body>
 </html>
 

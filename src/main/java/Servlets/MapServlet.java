@@ -36,8 +36,10 @@ public class MapServlet extends HttpServlet {
         double rangeInMeters = Double.parseDouble(request.getParameter("range"));
 
         StoDAO stoDAO = new StoDAO();
-        List<sto> res = stoDAO.getStosInRange(centerLon, centerLat, rangeInMeters);
-        request.setAttribute("res", res);
+        List<sto> resInRange = stoDAO.getStosInRangeOrOutOfRange(centerLon, centerLat, rangeInMeters, true);
+        List<sto> resOutOfRange = stoDAO.getStosInRangeOrOutOfRange(centerLon, centerLat, rangeInMeters, false);
+        request.setAttribute("res", resOutOfRange);//ставимо в змінну res, щоб стерти попередні дані з цієї змінної
+        request.setAttribute("resInRange", resInRange);
         request.getRequestDispatcher("/map.jsp").forward(request, response);
     }
 }

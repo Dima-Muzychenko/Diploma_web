@@ -30,15 +30,24 @@ public class StoDAO {
     }
 
     //Отримуємо СТО в діапазоні
-    public List<sto> getStosInRange(double centerLat, double centerLon, double rangeInMeters) {
+    public List<sto> getStosInRangeOrOutOfRange(double centerLat, double centerLon, double rangeInMeters, boolean isInRange) {
         List<sto> stos = new ArrayList<>();
 
-        try (Connection conn = DriverManager.getConnection(url, user, password);
-             PreparedStatement pstmt = conn.prepareStatement(//ST_DWithin для SRID 4326 використовує градуси, а не метри
-                     "SELECT * " +
-                             "FROM sto " +
-                             "WHERE ST_DWithin(geo, ST_MakePoint(?, ?, 4326)::geography, ?)")) {
-
+        try {
+            Connection conn = DriverManager.getConnection(url, user, password);
+            PreparedStatement pstmt = null;
+            if (isInRange) { //якщо шукаємо в діапазоні
+                 pstmt = conn.prepareStatement(//ST_DWithin для SRID 4326 використовує градуси, а не метри
+                        "SELECT * " +
+                                "FROM sto " +
+                                "WHERE ST_DWithin(geo, ST_MakePoint(?, ?, 4326)::geography, ?)");
+            }
+            else {
+                 pstmt = conn.prepareStatement(//ST_DWithin для SRID 4326 використовує градуси, а не метри
+                        "SELECT * " +
+                                "FROM sto " +
+                                "WHERE NOT ST_DWithin(geo, ST_MakePoint(?, ?, 4326)::geography, ?)");
+            }
             pstmt.setDouble(1, centerLat);
             pstmt.setDouble(2, centerLon);
             pstmt.setDouble(3, rangeInMeters); // Convert the radius from kilometers to meters
@@ -52,6 +61,7 @@ public class StoDAO {
         }
         return stos;
     }
+
 
     //(допоміжна функція) Отримуємо список СТО
     private void GetSTOList(List<sto> stos, ResultSet rs) throws SQLException {
