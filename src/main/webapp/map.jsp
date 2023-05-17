@@ -6,6 +6,13 @@
 <head>
     <title>Map</title>
     <style>
+        /*Виділяємо вибраний елемент списку (хоча він й виділений так,
+        начебто не використовується, але він використовується)*/
+        .sto-list.highlighted {
+            color: lime;
+        }
+
+        /*scrollbar*/
         .sto-list-container {
             height: 200px;
             overflow-y: auto;
@@ -23,11 +30,12 @@
             background-color: #f0f0f0;
         }
 
+
         .sto-name {
             font-weight: bold;
         }
 
-        .sto-coordinates span, .sto-address span, .sto-evaluation span {
+        .sto-coordinates span, .sto-address span, .sto-evaluation span, .sto-name span {
             font-weight: bold;
             color: #333;
         }
@@ -41,6 +49,7 @@
         let map
         let greenStoMarkers = [];//для СТО в діапазоні
         let stoMarkers = [];//Сочатку всі СТО, а потім СТО за діапазоном
+        let allSto = [];//всі СТО
         let selectedMarker = false; // Flag to track if a marker is selected
         function initialize() {
             <%--var center = new google.maps.LatLng(<%= request.getAttribute("lat") %>, <%= request.getAttribute("lng") %>);--%>
@@ -66,8 +75,7 @@
             var marker = new google.maps.Marker({
                 position: position,
                 map: map,
-                title: "<%= sto.getName() %>",
-                description: "<%= sto.getName() %> <br> Address: <%= sto.getAddress() %> <br> Evaluation: <%= sto.getEvaluation() %>",
+                title: "<%= sto.getName() %> \nAddress: <%= sto.getAddress() %> \nEvaluation: <%= sto.getEvaluation() %>",
                 icon: {
                     path: google.maps.SymbolPath.CIRCLE,
                     fillColor: "yellow",
@@ -102,8 +110,7 @@
             var marker = new google.maps.Marker({
                 position: position,
                 map: map,
-                title: "<%= sto.getName() %>",
-                description: "<%= sto.getName() %> <br> Address: <%= sto.getAddress() %> <br> Evaluation: <%= sto.getEvaluation() %>",
+                title: "<%= sto.getName() %> \nAddress: <%= sto.getAddress() %> \nEvaluation: <%= sto.getEvaluation() %>",
                 icon: {
                     path: google.maps.SymbolPath.CIRCLE,
                     fillColor: "green",
@@ -163,8 +170,39 @@
             document.getElementById("centerLon").value = location.lng();
         }
 
-        //При натисканні на СТО зі списку перекидуємо на підходящу точку
-        function zoomToMarkerFromList(index) {
+        //При натисканні на СТО зі списку
+        //1. Виділяємо даний елемент в списку
+        function zoomToMarkerFromList(index, element) {
+            // Remove the 'highlighted' class from all list elements
+            const listElements = document.querySelectorAll('.sto-list');
+            listElements.forEach(item => item.classList.remove('highlighted'));
+
+            // Add the 'highlighted' class to the clicked element
+            element.classList.add('highlighted');
+
+            //2. Виділяємо даний елемент на карті кольором lime
+            //Всі кольори в діапазоні ставимо зеленими
+            greenStoMarkers.forEach(greenEl => greenEl.setIcon({
+                path: google.maps.SymbolPath.CIRCLE,
+                fillColor: "green",
+                fillOpacity: 1,
+                strokeColor: "black",
+                strokeWeight: 1,
+                scale: 8
+            }));
+
+            //Вибране СТО позначаємо lime кольором
+            var theMarker = greenStoMarkers[index];
+            theMarker.setIcon({
+                path: google.maps.SymbolPath.CIRCLE,
+                fillColor: 'lime',
+                fillOpacity: 1,
+                strokeColor: 'black',
+                strokeWeight: 1,
+                scale: 8
+            });
+
+            //3. zoom to the element
             let marker = greenStoMarkers[index];
             zoomToMarker(marker);
         }
@@ -190,16 +228,19 @@
         for (int i = 0; i < resInRange.size(); i++) {
             sto sto = resInRange.get(i);
             if (sto.getGeo() != null) { %>
-    <ul class="sto-list" onclick="zoomToMarkerFromList(<%= i %>)">
+    <ul class="sto-list" onclick="zoomToMarkerFromList(<%= i %>, this)">
         <li class="sto-item">
-            <p class="sto-name">Name: <%= sto.getName() %></p>
+            <p class="sto-name">Name: <span><%= sto.getName() %></span></p>
             <p class="sto-address">Address: <span><%= sto.getAddress() %></span></p>
             <p class="sto-evaluation">Evaluation: <span><%= sto.getEvaluation() %></span></p>
             <p class="sto-coordinates">Latitude: <span><%= sto.getGeo().getY() %></span></p>
             <p class="sto-coordinates">Longitude: <span><%= sto.getGeo().getX() %></span></p>
         </li>
     </ul>
-    <% }}} %>
+    <%
+            }
+        }
+    } %>
 </div>
 
 </body>
