@@ -5,42 +5,7 @@
 <html>
 <head>
     <title>Map</title>
-    <style>
-        /*Виділяємо вибраний елемент списку (хоча він й виділений так,
-        начебто не використовується, але він використовується)*/
-        .sto-list.highlighted {
-            color: lime;
-        }
-
-        /*scrollbar*/
-        .sto-list-container {
-            height: 200px;
-            overflow-y: auto;
-        }
-        .sto-list {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-            cursor: pointer;
-        }
-
-        .sto-item {
-            margin-bottom: 20px;
-            padding: 10px;
-            background-color: #f0f0f0;
-        }
-
-
-        .sto-name {
-            font-weight: bold;
-        }
-
-        .sto-coordinates span, .sto-address span, .sto-evaluation span, .sto-name span {
-            font-weight: bold;
-            color: #333;
-        }
-
-    </style>
+    <link rel="stylesheet" type="text/css" href="map.css">
 
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBHRKe3PbCrcqxerxPGfkkbcHnriCnHmOw"></script>
