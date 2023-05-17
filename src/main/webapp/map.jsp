@@ -31,7 +31,7 @@
 
             //рисуєм точки (всі або за межами діапазану, якщо був викликаний метод пошуку)
             <%
-            List<sto> res = (List<sto>) request.getAttribute("res");
+            List<sto> res = (List<sto>) request.getAttribute("stos");
             if (res != null){
                 for (int i = 0; i < res.size(); i++) {
                     sto sto = res.get(i);
@@ -66,10 +66,10 @@
 
             //рисуємо точки в вибраному діапазоні (якщо вибрали)
             <%
-            List<sto> resInRange = (List<sto>) request.getAttribute("resInRange");
-            if (resInRange != null){
-                for (int i = 0; i < resInRange.size(); i++) {
-                    sto sto = resInRange.get(i);
+            List<sto> stosInRange = (List<sto>) request.getAttribute("stosInRange");
+            if (stosInRange != null){
+                for (int i = 0; i < stosInRange.size(); i++) {
+                    sto sto = stosInRange.get(i);
                     if (sto.getGeo() != null) { %>
             var position = new google.maps.LatLng(<%= sto.getGeo().getY() %>, <%= sto.getGeo().getX() %>);
             var marker = new google.maps.Marker({
@@ -136,8 +136,8 @@
         }
 
         //При натисканні на СТО зі списку
-        //1. Виділяємо даний елемент в списку
         function zoomToMarkerFromList(index, element) {
+            //1. Виділяємо даний елемент в списку
             // Remove the 'highlighted' class from all list elements
             const listElements = document.querySelectorAll('.sto-list');
             listElements.forEach(item => item.classList.remove('highlighted'));
@@ -146,6 +146,15 @@
             element.classList.add('highlighted');
 
             //2. Виділяємо даний елемент на карті кольором lime
+            changeColorOfSelectedStoFromList(index);
+
+            //3. zoom to the element
+            let marker = greenStoMarkers[index];
+            zoomToMarker(marker);
+        }
+
+        //Виділяємо елемент на карті кольором lime
+        function changeColorOfSelectedStoFromList(index){
             //Всі кольори в діапазоні ставимо зеленими
             greenStoMarkers.forEach(greenEl => greenEl.setIcon({
                 path: google.maps.SymbolPath.CIRCLE,
@@ -166,10 +175,6 @@
                 strokeWeight: 1,
                 scale: 8
             });
-
-            //3. zoom to the element
-            let marker = greenStoMarkers[index];
-            zoomToMarker(marker);
         }
 
 
@@ -189,9 +194,9 @@
 
 <%--список СТО в діапазоні--%>
 <div class="sto-list-container">
-    <% if (resInRange!=null){
-        for (int i = 0; i < resInRange.size(); i++) {
-            sto sto = resInRange.get(i);
+    <% if (stosInRange !=null){
+        for (int i = 0; i < stosInRange.size(); i++) {
+            sto sto = stosInRange.get(i);
             if (sto.getGeo() != null) { %>
     <ul class="sto-list" onclick="zoomToMarkerFromList(<%= i %>, this)">
         <li class="sto-item">

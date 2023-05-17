@@ -21,8 +21,8 @@ public class MapServlet extends HttpServlet {
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("default");
         EntityManager manager = factory.createEntityManager();
         StoDAO st = new StoDAO();
-        List<sto> res = st.getAllStos();
-        request.setAttribute("res", res);
+        List<sto> stos = st.getAllStos();
+        request.setAttribute("stos", stos);
         getServletContext().getRequestDispatcher("/map.jsp").forward(request,response);
         manager.close();
         factory.close();
@@ -38,8 +38,8 @@ public class MapServlet extends HttpServlet {
         StoDAO stoDAO = new StoDAO();
         List<sto> resInRange = stoDAO.getStosInRangeOrOutOfRange(centerLon, centerLat, rangeInMeters, true);
         List<sto> resOutOfRange = stoDAO.getStosInRangeOrOutOfRange(centerLon, centerLat, rangeInMeters, false);
-        request.setAttribute("res", resOutOfRange);//ставимо в змінну res, щоб стерти попередні дані з цієї змінної
-        request.setAttribute("resInRange", resInRange);
+        request.setAttribute("stos", resOutOfRange);//ставимо в змінну res, щоб стерти попередні дані з цієї змінної
+        request.setAttribute("stosInRange", resInRange);
         request.getRequestDispatcher("/map.jsp").forward(request, response);
     }
 }
