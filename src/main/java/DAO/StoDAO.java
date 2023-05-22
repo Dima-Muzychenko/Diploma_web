@@ -3,6 +3,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import constants.Constants;
 import entity.sto;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
@@ -10,10 +11,9 @@ import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.PrecisionModel;
 
 public class StoDAO {
-    private final String url = "jdbc:postgresql://localhost:5432/sto_evaluation";
-    private final String user = "postgres";
-    private final String password = "12345";
-    private final double kmInOneDegree = 111.134861111;
+    private final String url = Constants.url;
+    private final String user = Constants.user;
+    private final String password = Constants.password;
 
     //отримуємо всі СТО
     public List<sto> getAllStos() {

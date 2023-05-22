@@ -2,19 +2,19 @@
 <%@ page import="entity.sto" %>
 <%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="constants.Constants" %>
 <html>
 <head>
     <title>Map</title>
     <link rel="stylesheet" type="text/css" href="map.css">
+    <%String myCode = Constants.KEY_API;%>
 
-
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBHRKe3PbCrcqxerxPGfkkbcHnriCnHmOw"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=<%=myCode%>"></script>
     <script type="text/javascript">
         let marker; //маркер, що буде центром діапазону пошуку
-        let map
+        let map; //карта
         let greenStoMarkers = [];//для СТО в діапазоні
         let stoMarkers = [];//Сочатку всі СТО, а потім СТО за діапазоном
-        let allSto = [];//всі СТО
         let selectedMarker = false; // Flag to track if a marker is selected
         function initialize() {
             <%--var center = new google.maps.LatLng(<%= request.getAttribute("lat") %>, <%= request.getAttribute("lng") %>);--%>
