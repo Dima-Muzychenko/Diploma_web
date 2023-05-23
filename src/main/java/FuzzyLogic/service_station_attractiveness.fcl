@@ -12,133 +12,105 @@ VAR_OUTPUT
 END_VAR
 
 FUZZIFY quality
-    TERM poor := (0, 1) (3, 0);
-    TERM average := (2, 0) (5, 1) (8, 0);
-    TERM good := (7, 0) (10, 1);
+    TERM poor := trape 0 0 2.5 5;
+    TERM average := trape 2 4.5 6 9;
+    TERM good := trape 5.5 8.5 10 10;
 END_FUZZIFY
 
 FUZZIFY speed
-    TERM slow := (0, 1) (3, 0);
-    TERM moderate := (2, 0) (5, 1) (8, 0);
-    TERM fast := (7, 0) (10, 1);
+    TERM slow := trape 0 0 2.5 5;
+    TERM moderate := trape 2 4.5 6 9;
+    TERM fast := trape 5.5 8.5 10 10;
 END_FUZZIFY
 
 FUZZIFY price
-    TERM expensive := (0, 1) (3, 0);
-    TERM reasonable := (2, 0) (5, 1) (8, 0);
-    TERM cheap := (7, 0) (10, 1);
+    TERM expensive := trape 0 0 2.5 5;
+    TERM reasonable := trape 2 4.5 6 9;
+    TERM cheap := trape 5.5 8.5 10 10;
 END_FUZZIFY
 
 FUZZIFY service_range
-    TERM low := (0, 1) (3, 0);
-    TERM medium := (2, 0) (5, 1) (8, 0);
-    TERM high := (7, 0) (10, 1);
+    TERM low := trape 0 0 2.5 5;
+    TERM medium := trape 2 4.5 6 9;
+    TERM high := trape 5.5 8.5 10 10;
 END_FUZZIFY
 
 DEFUZZIFY attractiveness
-    TERM poor := (0, 1) (3, 0);
-    TERM average := (2, 0) (5, 1) (8, 0);
-    TERM good := (7, 0) (10, 1);
+    TERM very_low := trape 0 0 2 3.75;
+    TERM low := trian 1.5 2.5 5.5;
+    TERM average := trian 4 5 7;
+    TERM good := trian 6.5 7.5 9;
+    TERM perfect := trape 8.5 9 10 10;
     METHOD : COG;
-    DEFAULT := 0;
 END_DEFUZZIFY
 
 RULEBLOCK No1
     AND : MIN;
     OR : MAX;
 
-    RULE 1 : IF quality IS poor OR speed IS slow OR price IS expensive OR service_range IS low THEN attractiveness IS poor;
-    RULE 2 : IF quality IS poor OR speed IS slow OR price IS expensive OR service_range IS medium THEN attractiveness IS poor;
-    RULE 3 : IF quality IS poor OR speed IS slow OR price IS expensive OR service_range IS high THEN attractiveness IS average;
+RULE 1 : IF quality IS poor THEN attractiveness IS very_low;
 
-    RULE 4 : IF quality IS poor OR speed IS slow OR price IS reasonable OR service_range IS low THEN attractiveness IS poor;
-    RULE 5 : IF quality IS poor OR speed IS slow OR price IS reasonable OR service_range IS medium THEN attractiveness IS average;
-    RULE 6 : IF quality IS poor OR speed IS slow OR price IS reasonable OR service_range IS high THEN attractiveness IS average;
+RULE 2 : IF quality IS average AND speed IS slow AND price IS expensive THEN attractiveness IS very_low;
 
-    RULE 7 : IF quality IS poor OR speed IS slow OR price IS cheap OR service_range IS low THEN attractiveness IS average;
-    RULE 8 : IF quality IS poor OR speed IS slow OR price IS cheap OR service_range IS medium THEN attractiveness IS average;
-    RULE 9 : IF quality IS poor OR speed IS slow OR price IS cheap OR service_range IS high THEN attractiveness IS good;
+RULE 3 : IF quality IS average AND speed IS slow AND price IS reasonable AND service_range IS low THEN attractiveness IS very_low;
+RULE 4 : IF quality IS average AND speed IS slow AND price IS reasonable AND service_range IS medium THEN attractiveness IS low;
+RULE 5 : IF quality IS average AND speed IS slow AND price IS reasonable AND service_range IS high THEN attractiveness IS average;
 
-    RULE 10 : IF quality IS poor OR speed IS moderate OR price IS expensive OR service_range IS low THEN attractiveness IS poor;
-    RULE 11 : IF quality IS poor OR speed IS moderate OR price IS expensive OR service_range IS medium THEN attractiveness IS poor;
-    RULE 12 : IF quality IS poor OR speed IS moderate OR price IS expensive OR service_range IS high THEN attractiveness IS average;
-    RULE 13 : IF quality IS poor OR speed IS moderate OR price IS reasonable OR service_range IS low THEN attractiveness IS poor;
-    RULE 14 : IF quality IS poor OR speed IS moderate OR price IS reasonable OR service_range IS medium THEN attractiveness IS average;
-    RULE 15 : IF quality IS poor OR speed IS moderate OR price IS reasonable OR service_range IS high THEN attractiveness IS average;
+RULE 6 : IF quality IS average AND speed IS slow AND price IS cheap AND service_range IS low THEN attractiveness IS average;
+RULE 7 : IF quality IS average AND speed IS slow AND price IS cheap AND service_range IS medium THEN attractiveness IS good;
+RULE 8 : IF quality IS average AND speed IS slow AND price IS cheap AND service_range IS high THEN attractiveness IS good;
 
-    RULE 16 : IF quality IS poor OR speed IS moderate OR price IS cheap OR service_range IS low THEN attractiveness IS average;
-    RULE 17 : IF quality IS poor OR speed IS moderate OR price IS cheap OR service_range IS medium THEN attractiveness IS good;
-    RULE 18 : IF quality IS poor OR speed IS moderate OR price IS cheap OR service_range IS high THEN attractiveness IS good;
+RULE 9 : IF quality IS average AND speed IS moderate AND price IS expensive AND service_range IS low THEN attractiveness IS very_low;
+RULE 10 : IF quality IS average AND speed IS moderate AND price IS expensive AND service_range IS medium THEN attractiveness IS very_low;
+RULE 11 : IF quality IS average AND speed IS moderate AND price IS expensive AND service_range IS high THEN attractiveness IS low;
 
-    RULE 19 : IF quality IS poor OR speed IS fast OR price IS expensive OR service_range IS low THEN attractiveness IS poor;
-    RULE 20 : IF quality IS poor OR speed IS fast OR price IS expensive OR service_range IS medium THEN attractiveness IS average;
-    RULE 21 : IF quality IS poor OR speed IS fast OR price IS expensive OR service_range IS high THEN attractiveness IS average;
+RULE 12 : IF quality IS average AND speed IS moderate AND price IS reasonable AND service_range IS low THEN attractiveness IS average;
+RULE 13 : IF quality IS average AND speed IS moderate AND price IS reasonable AND service_range IS medium THEN attractiveness IS average;
+RULE 14 : IF quality IS average AND speed IS moderate AND price IS reasonable AND service_range IS high THEN attractiveness IS good;
 
-    RULE 22 : IF quality IS poor OR speed IS fast OR price IS reasonable OR service_range IS low THEN attractiveness IS average;
-    RULE 23 : IF quality IS poor OR speed IS fast OR price IS reasonable OR service_range IS medium THEN attractiveness IS average;
-    RULE 24 : IF quality IS poor OR speed IS fast OR price IS reasonable OR service_range IS high THEN attractiveness IS good;
+RULE 15 : IF quality IS average AND speed IS moderate AND price IS cheap AND service_range IS low THEN attractiveness IS good;
+RULE 16 : IF quality IS average AND speed IS moderate AND price IS cheap AND service_range IS medium THEN attractiveness IS good;
+RULE 17 : IF quality IS average AND speed IS moderate AND price IS cheap AND service_range IS high THEN attractiveness IS good;
 
-    RULE 25 : IF quality IS poor OR speed IS fast OR price IS cheap OR service_range IS low THEN attractiveness IS average;
-    RULE 26 : IF quality IS poor OR speed IS fast OR price IS cheap OR service_range IS medium THEN attractiveness IS good;
-    RULE 27 : IF quality IS poor OR speed IS fast OR price IS cheap OR service_range IS high THEN attractiveness IS good;
+RULE 18 : IF quality IS average AND speed IS fast AND price IS expensive AND service_range IS low THEN attractiveness IS low;
+RULE 19 : IF quality IS average AND speed IS fast AND price IS expensive AND service_range IS medium THEN attractiveness IS low;
+RULE 20 : IF quality IS average AND speed IS fast AND price IS expensive AND service_range IS high THEN attractiveness IS average;
 
-    RULE 28 : IF quality IS average OR speed IS slow OR price IS expensive OR service_range IS low THEN attractiveness IS poor;
-    RULE 29 : IF quality IS average OR speed IS slow OR price IS expensive OR service_range IS medium THEN attractiveness IS poor;
-    RULE 30 : IF quality IS average OR speed IS slow OR price IS expensive OR service_range IS high THEN attractiveness IS average;
+RULE 21 : IF quality IS average AND speed IS fast AND price IS reasonable AND service_range IS low THEN attractiveness IS average;
+RULE 22 : IF quality IS average AND speed IS fast AND price IS reasonable AND service_range IS medium THEN attractiveness IS good;
+RULE 23 : IF quality IS average AND speed IS fast AND price IS reasonable AND service_range IS high THEN attractiveness IS good;
 
-    RULE 31 : IF quality IS average OR speed IS slow OR price IS reasonable OR service_range IS low THEN attractiveness IS poor;
-    RULE 32 : IF quality IS average OR speed IS slow OR price IS reasonable OR service_range IS medium THEN attractiveness IS average;
-    RULE 33 : IF quality IS average OR speed IS slow OR price IS reasonable OR service_range IS high THEN attractiveness IS average;
+RULE 24 : IF quality IS average AND speed IS fast AND price IS cheap AND service_range IS low THEN attractiveness IS good;
+RULE 25 : IF quality IS average AND speed IS fast AND price IS cheap AND service_range IS medium THEN attractiveness IS good;
+RULE 26 : IF quality IS average AND speed IS fast AND price IS cheap AND service_range IS high THEN attractiveness IS perfect;
 
-    RULE 34 : IF quality IS average OR speed IS slow OR price IS cheap OR service_range IS low THEN attractiveness IS average;
-    RULE 35 : IF quality IS average OR speed IS slow OR price IS cheap OR service_range IS medium THEN attractiveness IS good;
-    RULE 36 : IF quality IS average OR speed IS slow OR price IS cheap OR service_range IS high THEN attractiveness IS good;
+RULE 27 : IF quality IS good AND speed IS slow AND price IS expensive AND service_range IS low THEN attractiveness IS low;
+RULE 28 : IF quality IS good AND speed IS slow AND price IS expensive AND service_range IS medium THEN attractiveness IS low;
+RULE 29 : IF quality IS good AND speed IS slow AND price IS expensive AND service_range IS high THEN attractiveness IS average;
 
-    RULE 37 : IF quality IS average OR speed IS fast OR price IS expensive OR service_range IS low THEN attractiveness IS poor;
-    RULE 38 : IF quality IS average OR speed IS fast OR price IS expensive OR service_range IS medium THEN attractiveness IS average;
-    RULE 39 : IF quality IS average OR speed IS fast OR price IS expensive OR service_range IS high THEN attractiveness IS average;
-    RULE 40 : IF quality IS average OR speed IS fast OR price IS reasonable OR service_range IS low THEN attractiveness IS average;
-    RULE 41 : IF quality IS average OR speed IS fast OR price IS reasonable OR service_range IS medium THEN attractiveness IS average;
-    RULE 42 : IF quality IS average OR speed IS fast OR price IS reasonable OR service_range IS high THEN attractiveness IS good;
+RULE 30 : IF quality IS good AND speed IS slow AND price IS reasonable AND service_range IS low THEN attractiveness IS average;
+RULE 31 : IF quality IS good AND speed IS slow AND price IS reasonable AND service_range IS medium THEN attractiveness IS good;
+RULE 32 : IF quality IS good AND speed IS slow AND price IS reasonable AND service_range IS high THEN attractiveness IS good;
 
-    RULE 43 : IF quality IS average OR speed IS fast OR price IS cheap OR service_range IS low THEN attractiveness IS average;
-    RULE 44 : IF quality IS average OR speed IS fast OR price IS cheap OR service_range IS medium THEN attractiveness IS good;
-    RULE 45 : IF quality IS average OR speed IS fast OR price IS cheap OR service_range IS high THEN attractiveness IS good;
+RULE 33 : IF quality IS good AND speed IS slow AND price IS cheap AND service_range IS low THEN attractiveness IS good;
+RULE 34 : IF quality IS good AND speed IS slow AND price IS cheap AND service_range IS medium THEN attractiveness IS perfect;
+RULE 35 : IF quality IS good AND speed IS slow AND price IS cheap AND service_range IS high THEN attractiveness IS perfect;
 
-    RULE 46 : IF quality IS good OR speed IS slow OR price IS expensive OR service_range IS low THEN attractiveness IS poor;
-    RULE 47 : IF quality IS good OR speed IS slow OR price IS expensive OR service_range IS medium THEN attractiveness IS poor;
-    RULE 48 : IF quality IS good OR speed IS slow OR price IS expensive OR service_range IS high THEN attractiveness IS average;
+RULE 36 : IF quality IS good AND speed IS moderate AND price IS expensive AND service_range IS low THEN attractiveness IS average;
+RULE 37 : IF quality IS good AND speed IS moderate AND price IS expensive AND service_range IS medium THEN attractiveness IS average;
+RULE 38 : IF quality IS good AND speed IS moderate AND price IS expensive AND service_range IS high THEN attractiveness IS good;
 
-    RULE 49 : IF quality IS good OR speed IS slow OR price IS reasonable OR service_range IS low THEN attractiveness IS poor;
-    RULE 50 : IF quality IS good OR speed IS slow OR price IS reasonable OR service_range IS medium THEN attractiveness IS average;
-    RULE 51 : IF quality IS good OR speed IS slow OR price IS reasonable OR service_range IS high THEN attractiveness IS average;
+RULE 39 : IF quality IS good AND speed IS moderate AND price IS reasonable AND service_range IS low THEN attractiveness IS good;
+RULE 40 : IF quality IS good AND speed IS moderate AND price IS reasonable AND service_range IS medium THEN attractiveness IS perfect;
+RULE 41 : IF quality IS good AND speed IS moderate AND price IS reasonable AND service_range IS high THEN attractiveness IS perfect;
 
-    RULE 52 : IF quality IS good OR speed IS slow OR price IS cheap OR service_range IS low THEN attractiveness IS average;
-    RULE 53 : IF quality IS good OR speed IS slow OR price IS cheap OR service_range IS medium THEN attractiveness IS good;
-    RULE 54 : IF quality IS good OR speed IS slow OR price IS cheap OR service_range IS high THEN attractiveness IS good;
+RULE 42 : IF quality IS good AND speed IS moderate AND price IS cheap THEN attractiveness IS good;
+RULE 43 : IF quality IS good AND speed IS fast AND price IS expensive AND service_range IS low THEN attractiveness IS good;
+RULE 44 : IF quality IS good AND speed IS fast AND price IS expensive AND service_range IS medium THEN attractiveness IS good;
 
-    RULE 55 : IF quality IS good OR speed IS moderate OR price IS expensive OR service_range IS low THEN attractiveness IS poor;
-    RULE 56 : IF quality IS good OR speed IS moderate OR price IS expensive OR service_range IS medium THEN attractiveness IS average;
-    RULE 57 : IF quality IS good OR speed IS moderate OR price IS expensive OR service_range IS high THEN attractiveness IS average;
-
-    RULE 58 : IF quality IS good OR speed IS moderate OR price IS reasonable OR service_range IS low THEN attractiveness IS average;
-    RULE 59 : IF quality IS good OR speed IS moderate OR price IS reasonable OR service_range IS medium THEN attractiveness IS average;
-    RULE 60 : IF quality IS good OR speed IS moderate OR price IS reasonable OR service_range IS high THEN attractiveness IS good;
-
-    RULE 61 : IF quality IS good OR speed IS moderate OR price IS cheap OR service_range IS low THEN attractiveness IS average;
-    RULE 62 : IF quality IS good OR speed IS moderate OR price IS cheap OR service_range IS medium THEN attractiveness IS good;
-    RULE 63 : IF quality IS good OR speed IS moderate OR price IS cheap OR service_range IS high THEN attractiveness IS good;
-
-    RULE 64 : IF quality IS good OR speed IS fast OR price IS expensive OR service_range IS low THEN attractiveness IS poor;
-    RULE 65 : IF quality IS good OR speed IS fast OR price IS expensive OR service_range IS medium THEN attractiveness IS poor;
-    RULE 66 : IF quality IS good OR speed IS fast OR price IS expensive OR service_range IS high THEN attractiveness IS average;
-    RULE 67 : IF quality IS good OR speed IS fast OR price IS reasonable OR service_range IS low THEN attractiveness IS average;
-    RULE 68 : IF quality IS good OR speed IS fast OR price IS reasonable OR service_range IS medium THEN attractiveness IS good;
-    RULE 69 : IF quality IS good OR speed IS fast OR price IS reasonable OR service_range IS high THEN attractiveness IS good;
-
-    RULE 70 : IF quality IS good OR speed IS fast OR price IS cheap OR service_range IS low THEN attractiveness IS good;
-    RULE 71 : IF quality IS good OR speed IS fast OR price IS cheap OR service_range IS medium THEN attractiveness IS good;
-    RULE 72 : IF quality IS good OR speed IS fast OR price IS cheap OR service_range IS high THEN attractiveness IS good;
+RULE 45 : IF quality IS good AND speed IS fast AND price IS expensive AND service_range IS high THEN attractiveness IS perfect;
+RULE 46 : IF quality IS good AND speed IS fast AND price IS reasonable THEN attractiveness IS perfect;
+RULE 47 : IF quality IS good AND speed IS fast AND price IS cheap THEN attractiveness IS perfect;
     END_RULEBLOCK
 
     END_FUNCTION_BLOCK
