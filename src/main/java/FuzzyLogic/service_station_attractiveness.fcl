@@ -45,8 +45,7 @@ DEFUZZIFY attractiveness
 END_DEFUZZIFY
 
 RULEBLOCK No1
-    AND : MIN;
-    OR : MAX;
+    ACC : MAX;
 
 RULE 1 : IF quality IS poor THEN attractiveness IS very_low;
 
