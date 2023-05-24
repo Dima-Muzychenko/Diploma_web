@@ -41,12 +41,11 @@ DEFUZZIFY attractiveness
     TERM average := trian 4 5 7;
     TERM good := trian 6.5 7.5 9;
     TERM perfect := trape 8.5 9 10 10;
-    METHOD : COG;
+    METHOD: COG;
 END_DEFUZZIFY
 
 RULEBLOCK No1
-    AND : MIN;
-    OR : MAX;
+ACCU : MAX; // Use ’max’ accumulation method
 
 RULE 1 : IF quality IS poor THEN attractiveness IS very_low;
 

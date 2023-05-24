@@ -26,7 +26,7 @@ public class ServiceStationAttractiveness {
         fis.setVariable("quality", 8.2);
         fis.setVariable("speed", 8.7);
         fis.setVariable("price", 8.9);
-        fis.setVariable("service_range", 8.45);
+        fis.setVariable("service_range", 7.45);
 
         // Evaluate
         fis.evaluate();
