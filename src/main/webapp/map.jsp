@@ -16,44 +16,38 @@
         let greenStoMarkers = [];//для СТО в діапазоні
         let stoMarkers = [];//Сочатку всі СТО, а потім СТО за діапазоном
         let selectedMarker = false; // Flag to track if a marker is selected
-
         function initialize() {
             //використовуємо геолокацію користувача як місце, куди нас на карті потрібно спочатку заспавнити
-            if (navigator.geolocation) { // Browser supports geolocation
-                // Get current position
-                navigator.geolocation.getCurrentPosition(
-                    function (position) {
-                        let userLatLng = {
-                            lat: position.coords.latitude,
-                            lng: position.coords.longitude
-                        };
-                        let mapOptions = {
-                            zoom: 10,
-                            center: userLatLng, // Use user's geolocation as the center
-                        };
-                        map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-                    },
-                    function (error) {
-                        // Handle geolocation error
-                        console.log('Error getting user geolocation:', error);
-                        // Set default center if geolocation fails
-                        let mapOptions = {
-                            zoom: 4,
-                            center: { lat: 45.15231, lng: 78.430 },
-                        };
-                        map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-                    }
-                );
-            } else {
-                // Browser doesn't support geolocation
-                console.log('Geolocation is not supported by this browser.');
-                // Set default center
-                let mapOptions = {
-                    zoom: 4,
-                    center: { lat: 45.15231, lng: 78.430 },
-                };
-                map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+            <%--var center = new google.maps.LatLng(<%= request.getAttribute("lat") %>, <%= request.getAttribute("lng") %>);--%>
+            let mapOptions = {
+                zoom: 8,
+            };
+            map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+            //ставимо центр біля того містся, де користувач знаходиться
+            function getUserLocation() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                        function(position) {
+                            // Success callback
+                            let userLat = position.coords.latitude;
+                            let userLng = position.coords.longitude;
+                            let userLocation = new google.maps.LatLng(userLat, userLng);
+                            map.setCenter(userLocation);
+                        },
+                        function(error) {
+                            map.setCenter({lat: 45.15231, lng: 78.430});
+                            console.log(error.message);
+                        }
+                    );
+                } else {
+                    console.log("Geolocation is not supported by this browser.");
+                    map.setCenter({lat: 45.15231, lng: 78.430});
+                }
             }
+
+            // Call the getUserLocation function
+            getUserLocation();
 
             // Add click event listener to the map
             map.addListener('click', function(event) {
