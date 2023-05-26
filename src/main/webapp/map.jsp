@@ -203,8 +203,17 @@
             <p class="sto-name">Name: <span><%= sto.getName() %></span></p>
             <p class="sto-address">Address: <span><%= sto.getAddress() %></span></p>
             <p class="sto-evaluation">Evaluation: <span><%= sto.getEvaluation() %></span></p>
+
+            <p class="sto-quality">Quality: <span><%= sto.getQuality() %></span></p>
+            <p class="sto-speed">Speed: <span><%= sto.getSpeed() %></span></p>
+            <p class="sto-price">Price: <span><%= sto.getPrice() %></span></p>
+            <p class="sto-service_range">Service Range: <span><%= sto.getServiceRange() %></span></p>
+
             <p class="sto-coordinates">Latitude: <span><%= sto.getGeo().getY() %></span></p>
             <p class="sto-coordinates">Longitude: <span><%= sto.getGeo().getX() %></span></p>
+
+            <p class="sto-working"> <span><%= sto.getWorking() %></span></p>
+            <p class="sto-comments">Description: <span><%= sto.getComments() %></span></p>
         </li>
     </ul>
     <%

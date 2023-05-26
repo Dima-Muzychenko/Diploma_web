@@ -71,15 +71,18 @@ public class StoDAO {
             sto.setInfoId(rs.getInt("info_id"));
             sto.setName(rs.getString("name"));
             sto.setOwner(rs.getString("owner"));
-            sto.setQuality(rs.getInt("quality"));
-            sto.setSpeed(rs.getInt("speed"));
-            sto.setPrice(rs.getInt("price"));
-            sto.setServiceRange(rs.getInt("service_range"));
+            sto.setQuality(rs.getDouble("quality"));
+            sto.setSpeed(rs.getDouble("speed"));
+            sto.setPrice(rs.getDouble("price"));
+            sto.setServiceRange(rs.getDouble("service_range"));
             sto.setEvaluation(rs.getDouble("evaluation"));
             sto.setAddress(rs.getString("address"));
             sto.setLat(rs.getDouble("lat"));
             sto.setLon(rs.getDouble("lon"));
             sto.setResultValue(rs.getString("result_value"));
+            sto.setPassword(rs.getString("password"));
+            sto.setComments(rs.getString("comments"));
+            sto.setWorking(rs.getString("working"));
 
             GeometryFactory gf = new GeometryFactory(new PrecisionModel(), 4326);
             Point pgGeo = gf.createPoint(new Coordinate(sto.getLon(), sto.getLat()));

@@ -21,7 +21,6 @@ public class ServiceStationAttractiveness {
             return;
         }
 
-
         // Set inputs
         fis.setVariable("quality", 8.2);
         fis.setVariable("speed", 8.7);

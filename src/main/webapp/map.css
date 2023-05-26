@@ -23,11 +23,11 @@
 }
 
 
-.sto-name {
+.sto-name, .sto-evaluation {
     font-weight: bold;
 }
 
-.sto-coordinates span, .sto-address span, .sto-evaluation span, .sto-name span {
+.sto-coordinates span, .sto-address span, .sto-evaluation span, .sto-name span, .sto-quality span, .sto-speed span, .sto-price span, .sto-service_range span, .sto-working span, .sto-comments span{
     font-weight: bold;
     color: #333;
 }

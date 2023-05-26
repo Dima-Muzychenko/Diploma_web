@@ -21,6 +21,7 @@ public class EstimationServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        getServletContext().getRequestDispatcher("/Evaluation.jsp").forward(request,response);
     }
 
     @Override
@@ -38,14 +39,24 @@ public class EstimationServlet extends HttpServlet {
         sto stoInsert = new sto();
         stoInsert.setName(request.getParameter("name"));//id змінювати нельзя в Hibernate
         stoInsert.setOwner(request.getParameter("owner"));
-        stoInsert.setQuality(Integer.valueOf(request.getParameter("quality")));
-        stoInsert.setSpeed(Integer.valueOf(request.getParameter("speed")));
-        stoInsert.setPrice(Integer.valueOf(request.getParameter("price")));
-        stoInsert.setServiceRange(Integer.valueOf(request.getParameter("service_range")));
-        stoInsert.setEvaluation(Double.valueOf(request.getParameter("evaluation")));
-        stoInsert.setAddress(request.getParameter("address"));
-        stoInsert.setLat(Double.valueOf(request.getParameter("lat")));
-        stoInsert.setLon(Double.valueOf(request.getParameter("lon")));
+        try { //перевірка, чи у нас число в тих строках, де воно повинно бути
+            stoInsert.setQuality(Double.valueOf(request.getParameter("quality")));
+            stoInsert.setSpeed(Double.valueOf(request.getParameter("speed")));
+            stoInsert.setPrice(Double.valueOf(request.getParameter("price")));
+            stoInsert.setServiceRange(Double.valueOf(request.getParameter("service_range")));
+            stoInsert.setEvaluation(Double.valueOf(request.getParameter("evaluation")));
+            stoInsert.setAddress(request.getParameter("address"));
+            stoInsert.setLat(Double.valueOf(request.getParameter("lat")));
+            stoInsert.setLon(Double.valueOf(request.getParameter("lon")));
+            stoInsert.setPassword(request.getParameter("password"));
+            stoInsert.setComments(request.getParameter("comments"));
+            stoInsert.setWorking(request.getParameter("working"));
+        } catch (NumberFormatException e) {
+            System.out.println("Expected double type: " + e);
+            manager.close();
+            factory.close();
+        }
+
 
         GeometryFactory gf = new GeometryFactory(new PrecisionModel(), 4326);
         Point pgGeo = gf.createPoint(new Coordinate(stoInsert.getLon(), stoInsert.getLat()));
