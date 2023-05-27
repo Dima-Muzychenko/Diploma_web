@@ -8,13 +8,13 @@ public class ServiceStationAttractiveness {
 
     public static void main(String[] args) throws FileNotFoundException {
         ServiceStationAttractiveness attractiveness = new ServiceStationAttractiveness();
-        double attract = attractiveness.CountEvaluation(3.56, 3.67, 8, 5);
+        double attract = attractiveness.CountEvaluation(7.56, 3.67, 8, 5);
     }
         // Load FCL file
 
     public double CountEvaluation(double quality, double speed, double price, double service_range) throws FileNotFoundException {
         // Load FCL file
-        String fileName = "src/main/java/FuzzyLogic/service_station_attractiveness.fcl";
+        String fileName = "C:\\Users\\robin\\OneDrive\\Рабочий стол\\University\\диплом\\Мій диплом\\service_station_attractiveness.fcl";
         FIS fis = FIS.load(fileName, true);
 
         // Check for errors

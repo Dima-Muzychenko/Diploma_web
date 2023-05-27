@@ -63,13 +63,27 @@ public class CreateNewServiceServlet extends HttpServlet {
 
 
         GeometryFactory gf = new GeometryFactory(new PrecisionModel(), 4326);
-        Point pgGeo = gf.createPoint(new Coordinate(stoInsert.getLon(), stoInsert.getLat()));
+        Point pgGeo = gf.createPoint(new Coordinate(stoInsert.getLat(), stoInsert.getLon()));
         stoInsert.setGeo(pgGeo);
 
 
+//        manager.createNativeQuery("INSERT INTO sto (name, owner, quality, speed, price, service_range, evaluation, address, lat, lon, geo, password, comments, working) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        String query = "INSERT INTO sto (name, owner, quality, speed, price, service_range, evaluation, address, lat, lon, geo, password, comments, working) " +
+                "VALUES ('" + stoInsert.getName() + "', '" + stoInsert.getOwner() + "', " +
+                stoInsert.getQuality() + ", " + stoInsert.getSpeed() + ", " + stoInsert.getPrice() + ", " +
+                stoInsert.getServiceRange() + ", " + stoInsert.getEvaluation() + ", '" + stoInsert.getAddress() + "', " +
+                stoInsert.getLat() + ", " + stoInsert.getLon() + ", '" + stoInsert.getGeo() + "', '" + stoInsert.getPassword() + "', '" +
+                stoInsert.getComments() + "', '" + stoInsert.getWorking() + "')";
+
         manager.getTransaction().begin();
-        manager.merge(stoInsert);//додаємо/оновлюємо дані
+        int rowsAffected = manager.createNativeQuery(query).executeUpdate();
         manager.getTransaction().commit();
+
+        if (rowsAffected > 0) {
+            System.out.println("Works: "+rowsAffected);
+        } else {
+            System.out.println("Does not work");
+        }
 
         manager.close();
         factory.close();
