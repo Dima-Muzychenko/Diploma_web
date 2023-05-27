@@ -7,6 +7,7 @@
 <head>
     <title>Map</title>
     <link rel="stylesheet" type="text/css" href="map.css">
+    <jsp:include page="header.jsp" />
     <%String myCode = Constants.KEY_API;%>
 
     <script src="https://maps.googleapis.com/maps/api/js?key=<%=myCode%>"></script>
@@ -20,7 +21,7 @@
             //використовуємо геолокацію користувача як місце, куди нас на карті потрібно спочатку заспавнити
             <%--var center = new google.maps.LatLng(<%= request.getAttribute("lat") %>, <%= request.getAttribute("lng") %>);--%>
             let mapOptions = {
-                zoom: 8,
+                zoom: 10,
             };
             map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 

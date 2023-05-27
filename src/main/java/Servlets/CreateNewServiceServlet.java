@@ -13,15 +13,13 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
-@WebServlet(name = "EstimationServlet", value = "/estimation")
-public class EstimationServlet extends HttpServlet {
+@WebServlet(name = "CreateNewServiceServlet", value = "/createNewService")
+public class CreateNewServiceServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        getServletContext().getRequestDispatcher("/Evaluation.jsp").forward(request,response);
+        getServletContext().getRequestDispatcher("/createNewService.jsp").forward(request,response);
     }
 
     @Override
