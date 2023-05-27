@@ -1,5 +1,6 @@
 package Servlets;
 
+import FuzzyLogic.ServiceStationAttractiveness;
 import entity.sto;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
@@ -42,7 +43,12 @@ public class CreateNewServiceServlet extends HttpServlet {
             stoInsert.setSpeed(Double.valueOf(request.getParameter("speed")));
             stoInsert.setPrice(Double.valueOf(request.getParameter("price")));
             stoInsert.setServiceRange(Double.valueOf(request.getParameter("service_range")));
-            stoInsert.setEvaluation(Double.valueOf(request.getParameter("evaluation")));
+
+
+            ServiceStationAttractiveness attractiveness = new ServiceStationAttractiveness();
+            double evaluation = attractiveness.CountEvaluation(stoInsert.getQuality(), stoInsert.getSpeed(), stoInsert.getPrice(), stoInsert.getServiceRange());
+            stoInsert.setEvaluation(evaluation);
+
             stoInsert.setAddress(request.getParameter("address"));
             stoInsert.setLat(Double.valueOf(request.getParameter("lat")));
             stoInsert.setLon(Double.valueOf(request.getParameter("lon")));

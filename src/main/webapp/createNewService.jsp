@@ -10,13 +10,13 @@
         }
 
         .container {
-            max-width: 600px;
+            max-width: 830px;
             margin: 0 auto;
             text-align: center;
         }
 
         h1 {
-            margin-top: 0;
+            margin-top: 20px;
         }
 
         h2 {
@@ -32,19 +32,19 @@
             content: "";
             position: absolute;
             top: 50%;
-            width: 500px;
-            height: 1px;
+            width: 610px;
+            height: 2px;
             background-color: #ccc;
         }
 
         h2::before {
-            left: -320px;
+            left: -330px;
             /*width: 30%;*/
             transform: translateY(-50%);
         }
 
         h2::after {
-            right: -320px;
+            right: -330px;
             /*width: 30%;*/
             transform: translateY(-50%);
         }
@@ -58,19 +58,21 @@
         input[type="text"],
         input[type="password"],
         textarea {
-            width: 300px;
+            width: 320px;
             padding: 5px;
             border: 1px solid #ccc;
             border-radius: 3px;
             margin-bottom: 10px;
         }
-
         textarea {
-            height: 80px;
+            height: 120px;
+            resize: none;
         }
 
         input[type="submit"] {
+            width: 350px;
             padding: 10px 20px;
+            margin-top: 15px;
             background-color: #337ab7;
             color: #fff;
             border: none;
@@ -112,7 +114,7 @@
 <jsp:include page="header.jsp" />
 <div class="container">
     <h1>Add Service Station</h1>
-    <form action="EstimationServlet" method="post">
+    <form action="/createNewService" method="post">
         <h2>Public information</h2>
         <label for="name">Name:</label>
         <input type="text" id="name" name="name" required>
