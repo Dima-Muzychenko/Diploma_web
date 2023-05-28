@@ -51,7 +51,7 @@
     <ul>
       <li><a href="/map">Map</a></li>
       <li><a href="/createNewService">Create New Service</a></li>
-      <li><a href="/watchService">Watch Service</a></li>
+      <li><a href="/watchService.jsp">Watch Service</a></li>
     </ul>
     <ul class="bot">
       <li><a href="/Bot">Bot</a></li>

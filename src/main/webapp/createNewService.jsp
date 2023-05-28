@@ -114,7 +114,7 @@
 <body>
 <jsp:include page="header.jsp" />
 <div class="container">
-    <h1>Add Service Station</h1>
+    <h1>Create car service</h1>
     <form action="/createNewService" method="post">
         <h2>Public information</h2>
         <label for="name">Name:</label>
