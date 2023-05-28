@@ -37,7 +37,9 @@ public class ServiceStationAttractiveness {
 
         // Print output
         System.out.println("Attractiveness: " + attractiveness);
-
+        // Show chart
+//        RuleBlock ruleBlock = fis.getFunctionBlock("service_station_attractiveness").getFuzzyRuleBlock("No1");
+//        JFuzzyChart.get().chart(ruleBlock.getFunctionBlock());
 
         return attractiveness;
     }

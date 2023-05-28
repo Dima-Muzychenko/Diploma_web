@@ -14,6 +14,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.net.URLEncoder;
 
 @WebServlet(name = "CreateNewServiceServlet", value = "/createNewService")
 public class CreateNewServiceServlet extends HttpServlet {
@@ -25,6 +26,8 @@ public class CreateNewServiceServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");//Ставимо нормальне кодування
+        response.setCharacterEncoding("UTF-8");
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("default");
         EntityManager manager = factory.createEntityManager();
         //для оновлення даних
@@ -85,7 +88,21 @@ public class CreateNewServiceServlet extends HttpServlet {
             System.out.println("Does not work");
         }
 
+        request.setAttribute("name", stoInsert.getName());
+        request.setAttribute("lat", stoInsert.getLat());
+        request.setAttribute("lon", stoInsert.getLon());
+        request.setAttribute("pass", stoInsert.getPassword());
+        String encodedName = URLEncoder.encode(stoInsert.getName(), "UTF-8");
+        String encodedPass = URLEncoder.encode(stoInsert.getPassword(), "UTF-8");
+
+
+        String redirectURL = "/info?name=" + encodedName + "&lat=" + stoInsert.getLat() + "&lon=" + stoInsert.getLon() + "&pass=" + encodedPass;
+        response.sendRedirect(redirectURL);
+//        request.getRequestDispatcher("InfoServlet").forward(request, response);
+//        request.getRequestDispatcher("/info").forward(request, response);
+//        request.getRequestDispatcher("info").forward(request, response);
         manager.close();
         factory.close();
+
     }
 }

@@ -15,6 +15,33 @@ public class StoDAO {
     private final String user = Constants.user;
     private final String password = Constants.password;
 
+    public sto getSTOByNameLatLonPass(String name, double lat, double lon, String pass) {
+        List<sto> stos = new ArrayList<>();
+
+        try {
+            Connection conn = DriverManager.getConnection(url, user, password);
+            PreparedStatement pstmt = null;
+            pstmt = conn.prepareStatement(//ST_DWithin для SRID 4326 використовує градуси, а не метри
+                    "SELECT * " +
+                            "FROM sto " +
+                            "WHERE name = ? AND lat = ? AND lon = ? AND password = ?");
+
+            pstmt.setString(1, name);
+            pstmt.setDouble(2, lat);
+            pstmt.setDouble(3, lon); // Convert the radius from kilometers to meters
+            pstmt.setString(4, pass);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            GetSTOList(stos, rs);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if (stos.isEmpty())
+            return null;
+        return stos.get(0);//так як у нас тільки 1 елемент, то його й відправляємо
+    }
     //отримуємо всі СТО
     public List<sto> getAllStos() {
         List<sto> stos = new ArrayList<>();

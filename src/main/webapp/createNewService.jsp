@@ -1,4 +1,5 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"%>
+
 <html>
 <head>
     <title>Evaluation</title>
@@ -6,7 +7,7 @@
         /* General Styles */
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
+            margin: 8px;
         }
 
         .container {
