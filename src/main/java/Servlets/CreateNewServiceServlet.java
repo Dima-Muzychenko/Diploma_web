@@ -88,19 +88,16 @@ public class CreateNewServiceServlet extends HttpServlet {
             System.out.println("Does not work");
         }
 
-        request.setAttribute("name", stoInsert.getName());
-        request.setAttribute("lat", stoInsert.getLat());
-        request.setAttribute("lon", stoInsert.getLon());
-        request.setAttribute("pass", stoInsert.getPassword());
+//        request.setAttribute("name", stoInsert.getName());
+//        request.setAttribute("lat", stoInsert.getLat());
+//        request.setAttribute("lon", stoInsert.getLon());
+//        request.setAttribute("pass", stoInsert.getPassword());
         String encodedName = URLEncoder.encode(stoInsert.getName(), "UTF-8");
         String encodedPass = URLEncoder.encode(stoInsert.getPassword(), "UTF-8");
 
 
         String redirectURL = "/info?name=" + encodedName + "&lat=" + stoInsert.getLat() + "&lon=" + stoInsert.getLon() + "&pass=" + encodedPass;
         response.sendRedirect(redirectURL);
-//        request.getRequestDispatcher("InfoServlet").forward(request, response);
-//        request.getRequestDispatcher("/info").forward(request, response);
-//        request.getRequestDispatcher("info").forward(request, response);
         manager.close();
         factory.close();
 

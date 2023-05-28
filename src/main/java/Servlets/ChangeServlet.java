@@ -1,36 +1,60 @@
 package Servlets;
 
+import FuzzyLogic.ServiceStationAttractiveness;
 import entity.sto;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.net.URLEncoder;
 
 @WebServlet(name = "ChangeServlet", value = "/ChangeServlet")
 public class ChangeServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8"); // Set the proper encoding
+        response.setCharacterEncoding("UTF-8");
         // Retrieve the updated values from request parameters
-        String name = request.getParameter("name");
-        // Retrieve other updated fields as needed
+
+        double quality = Double.parseDouble(request.getParameter("quality"));
+        double speed = Double.parseDouble(request.getParameter("speed"));
+        double price = Double.parseDouble(request.getParameter("price"));
+        double service_range = Double.parseDouble(request.getParameter("service_range"));
 
         // Retrieve the sto object from the session
         sto sto1 = (sto) request.getSession().getAttribute("sto1");
+//        sto1.setQuality(quality);
+//        sto1.setSpeed(speed);
+//        sto1.setPrice(price);
+//        sto1.setServiceRange(service_range);
 
-        if (sto1 != null) {
-            // Update the sto object with the new values
-            sto1.setName(name);
-            // Update other fields as needed
+        EntityManagerFactory factory = Persistence.createEntityManagerFactory("default");
+        EntityManager manager = factory.createEntityManager();
 
-            // Perform the necessary logic to save the changes
-            // This may involve interacting with your data storage (e.g., a database) to update the corresponding sto object
+        ServiceStationAttractiveness attractiveness = new ServiceStationAttractiveness();
+        double evaluation = attractiveness.CountEvaluation(sto1.getQuality(), sto1.getSpeed(), sto1.getPrice(), sto1.getServiceRange());
 
-            // Redirect to info.jsp to display the updated information
-            response.sendRedirect("info.jsp");
-        } else {
-            // Handle the case when sto1 is null
-            // Redirect to an appropriate page or display an error message
-        }
+
+        String query = "UPDATE sto SET quality = " + quality + ", speed = " + speed + ", price = " + price +
+                ", service_range = " + service_range + ", evaluation = " + evaluation + " WHERE info_id = " + sto1.getInfoId() ;
+
+        manager.getTransaction().begin();
+//        manager.merge(sto1);
+
+        manager.createNativeQuery(query).executeUpdate();
+        manager.getTransaction().commit();
+
+
+        manager.close();
+        factory.close();
+
+        String encodedName = URLEncoder.encode(sto1.getName(), "UTF-8");
+        String encodedPass = URLEncoder.encode(sto1.getPassword(), "UTF-8");
+        String redirectURL = "/info?name=" + encodedName + "&lat=" + sto1.getLat() + "&lon=" + sto1.getLon() + "&pass=" + encodedPass;
+        response.sendRedirect(redirectURL);
     }
 }

@@ -49,15 +49,20 @@
 <%
     sto sto1 = (entity.sto) session.getAttribute("sto1");    // You can now access all the properties of the sto object and use them in your form
 
-    // Example: Display the sto name
-    String stoName = sto1.getName();
 %>
-<form action="updateSto" method="post">
+<form action="ChangeServlet" method="post">
     <!-- Add input fields for the sto properties you want to modify -->
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" value="<%= stoName %>">
+    <label for="quality">Name:</label>
+    <input type="text" id="quality" name="quality" value="<%= sto1.getQuality() %>">
 
-    <!-- Add more fields for other STO properties that you want to modify -->
+    <label for="speed">Name:</label>
+    <input type="text" id="speed" name="speed" value="<%= sto1.getSpeed() %>">
+
+    <label for="price">Name:</label>
+    <input type="text" id="price" name="price" value="<%= sto1.getPrice() %>">
+
+    <label for="serviceRange">Name:</label>
+    <input type="text" id="serviceRange" name="service_range" value="<%= sto1.getServiceRange() %>">
 
     <input type="submit" value="Update STO">
 </form>
