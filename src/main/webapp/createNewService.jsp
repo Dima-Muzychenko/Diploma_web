@@ -28,7 +28,7 @@
         <input type="text" id="latitude" name="lat" required value="${param.lat}">
         <div class="info-circle">
             <div class="info-tooltip">
-                Latitude coordinate of the car service. It should be in range from 90 to -90. For example 34.2343
+                Latitude coordinate of the car service. It should be in range from -90 to 90. For example 34.2343
             </div>
         </div>
 
@@ -36,7 +36,7 @@
         <input type="text" id="longitude" name="lon" required value="${param.lon}">
         <div class="info-circle">
             <div class="info-tooltip">
-                Longitude coordinate of the service station. It should be in range from 180 to -180. For example -114.2343
+                Longitude coordinate of the service station. It should be in range from -180 to 180. For example -114.2343
             </div>
         </div>
 
