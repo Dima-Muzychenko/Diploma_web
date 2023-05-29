@@ -112,7 +112,7 @@ public class StoDAO {
             sto.setWorking(rs.getString("working"));
 
             GeometryFactory gf = new GeometryFactory(new PrecisionModel(), 4326);
-            Point pgGeo = gf.createPoint(new Coordinate(sto.getLon(), sto.getLat()));
+            Point pgGeo = gf.createPoint(new Coordinate(sto.getLat(), sto.getLon()));
             sto.setGeo(pgGeo);
 
             stos.add(sto);

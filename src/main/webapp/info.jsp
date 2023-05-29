@@ -2,35 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <html>
 <head>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
-        }
-
-        h1 {
-            color: #333;
-            text-align: center;
-        }
-
-        table {
-            width: 1200px;
-            margin: 20px auto;
-            border-collapse: collapse;
-            background-color: #fff;
-            border: 1px solid #ddd;
-        }
-
-        th, td {
-            padding: 10px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f5f5f5;
-            font-weight: bold;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="info.css">
     <title>STO Information</title>
 </head>
 <body>
@@ -65,7 +37,9 @@
 <form action="change.jsp" method="post">
     <%-- Store the sto object in the session --%>
     <% session.setAttribute("sto1", sto1); %>
-    <input type="submit" value="Change STO">
+    <div class="center-button">
+        <input type="submit" value="Change STO">
+    </div>
 </form>
 <%
 } else {

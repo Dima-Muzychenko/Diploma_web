@@ -23,9 +23,10 @@ public class MapServlet extends HttpServlet {
         StoDAO st = new StoDAO();
         List<sto> stos = st.getAllStos();
         request.setAttribute("stos", stos);
-        getServletContext().getRequestDispatcher("/map.jsp").forward(request,response);
         manager.close();
         factory.close();
+        getServletContext().getRequestDispatcher("/map.jsp").forward(request,response);
+
 
     }
 

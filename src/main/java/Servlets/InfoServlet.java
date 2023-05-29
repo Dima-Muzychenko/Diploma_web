@@ -24,9 +24,9 @@ public class InfoServlet extends HttpServlet {
         sto sto = st.getSTOByNameLatLonPass(request.getParameter("name"), Double.parseDouble(request.getParameter("lat")),
                 Double.parseDouble(request.getParameter("lon")), request.getParameter("pass"));
         request.setAttribute("sto", sto);
-        getServletContext().getRequestDispatcher("/info.jsp").forward(request,response);
         manager.close();
         factory.close();
+        getServletContext().getRequestDispatcher("/info.jsp").forward(request,response);
 
 //        request.getRequestDispatcher("/info.jsp").forward(request, response);
     }

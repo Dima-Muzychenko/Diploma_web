@@ -82,6 +82,8 @@ public class CreateNewServiceServlet extends HttpServlet {
         int rowsAffected = manager.createNativeQuery(query).executeUpdate();
         manager.getTransaction().commit();
 
+        manager.close();
+        factory.close();
         if (rowsAffected > 0) {
             System.out.println("Works: "+rowsAffected);
         } else {
@@ -98,8 +100,7 @@ public class CreateNewServiceServlet extends HttpServlet {
 
         String redirectURL = "/info?name=" + encodedName + "&lat=" + stoInsert.getLat() + "&lon=" + stoInsert.getLon() + "&pass=" + encodedPass;
         response.sendRedirect(redirectURL);
-        manager.close();
-        factory.close();
+
 
     }
 }

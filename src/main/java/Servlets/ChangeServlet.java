@@ -27,27 +27,25 @@ public class ChangeServlet extends HttpServlet {
 
         // Retrieve the sto object from the session
         sto sto1 = (sto) request.getSession().getAttribute("sto1");
-//        sto1.setQuality(quality);
-//        sto1.setSpeed(speed);
-//        sto1.setPrice(price);
-//        sto1.setServiceRange(service_range);
+        sto1.setQuality(quality);
+        sto1.setSpeed(speed);
+        sto1.setPrice(price);
+        sto1.setServiceRange(service_range);
 
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("default");
         EntityManager manager = factory.createEntityManager();
 
         ServiceStationAttractiveness attractiveness = new ServiceStationAttractiveness();
         double evaluation = attractiveness.CountEvaluation(sto1.getQuality(), sto1.getSpeed(), sto1.getPrice(), sto1.getServiceRange());
+        sto1.setEvaluation(evaluation);
 
 
         String query = "UPDATE sto SET quality = " + quality + ", speed = " + speed + ", price = " + price +
                 ", service_range = " + service_range + ", evaluation = " + evaluation + " WHERE info_id = " + sto1.getInfoId() ;
 
         manager.getTransaction().begin();
-//        manager.merge(sto1);
-
         manager.createNativeQuery(query).executeUpdate();
         manager.getTransaction().commit();
-
 
         manager.close();
         factory.close();

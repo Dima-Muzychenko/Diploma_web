@@ -3,44 +3,7 @@
 
 <html>
 <head>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
-        }
-
-        h1 {
-            color: #333;
-            text-align: center;
-        }
-
-        form {
-            width: 400px;
-            margin: 20px auto;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            padding: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        input[type="text"], textarea {
-            width: 100%;
-            padding: 5px;
-            margin-bottom: 10px;
-        }
-
-        input[type="submit"] {
-            background-color: #4CAF50;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="change.css">
     <title>Change STO</title>
 </head>
 <body>
@@ -52,16 +15,16 @@
 %>
 <form action="ChangeServlet" method="post">
     <!-- Add input fields for the sto properties you want to modify -->
-    <label for="quality">Name:</label>
+    <label for="quality">Quality:</label>
     <input type="text" id="quality" name="quality" value="<%= sto1.getQuality() %>">
 
-    <label for="speed">Name:</label>
+    <label for="speed">Speed:</label>
     <input type="text" id="speed" name="speed" value="<%= sto1.getSpeed() %>">
 
-    <label for="price">Name:</label>
+    <label for="price">Price:</label>
     <input type="text" id="price" name="price" value="<%= sto1.getPrice() %>">
 
-    <label for="serviceRange">Name:</label>
+    <label for="serviceRange">Service Range:</label>
     <input type="text" id="serviceRange" name="service_range" value="<%= sto1.getServiceRange() %>">
 
     <input type="submit" value="Update STO">
