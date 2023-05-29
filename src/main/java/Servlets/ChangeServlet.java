@@ -1,5 +1,6 @@
 package Servlets;
 
+import Check.InputDataCheck;
 import FuzzyLogic.ServiceStationAttractiveness;
 import entity.sto;
 
@@ -20,10 +21,29 @@ public class ChangeServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         // Retrieve the updated values from request parameters
 
+
+        InputDataCheck check = new InputDataCheck();
+        // Validate latitude and longitude values
+        boolean isValidQuality = check.isValidNumber(request.getParameter("quality"), 0, 10);
+        boolean isValidSpeed = check.isValidNumber(request.getParameter("speed"), 0, 10);
+        boolean isValidPrice = check.isValidNumber(request.getParameter("price"), 0, 10);
+        boolean isValidServiceRange = check.isValidNumber(request.getParameter("service_range"), 0, 10);
+
+        if (!isValidQuality || !isValidSpeed || !isValidPrice || !isValidServiceRange) {
+            // Set the error message in the request attribute
+            request.setAttribute("errorMessage", "Invalid quality, speed, price or service range value. It Should be in range from 0 to 10");
+
+            // Forward the request back to the JSP page
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/change.jsp");
+            dispatcher.forward(request, response);
+            return;
+        }
+
         double quality = Double.parseDouble(request.getParameter("quality"));
         double speed = Double.parseDouble(request.getParameter("speed"));
         double price = Double.parseDouble(request.getParameter("price"));
         double service_range = Double.parseDouble(request.getParameter("service_range"));
+
 
         // Retrieve the sto object from the session
         sto sto1 = (sto) request.getSession().getAttribute("sto1");

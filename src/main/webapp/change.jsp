@@ -26,6 +26,15 @@
 
     <label for="serviceRange">Service Range:</label>
     <input type="text" id="serviceRange" name="service_range" value="<%= sto1.getServiceRange() %>">
+    <br>
+    <%String error = (String) request.getAttribute("errorMessage");
+        if(error!=null) {
+    %>
+    <span style="color: red;"><%= request.getAttribute("errorMessage") %></span>
+    <br>
+    <%
+        }
+    %>
 
     <input type="submit" value="Update STO">
 </form>

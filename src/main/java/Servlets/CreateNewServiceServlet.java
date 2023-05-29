@@ -1,5 +1,6 @@
 package Servlets;
 
+import Check.InputDataCheck;
 import FuzzyLogic.ServiceStationAttractiveness;
 import entity.sto;
 import org.locationtech.jts.geom.Coordinate;
@@ -30,13 +31,27 @@ public class CreateNewServiceServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("default");
         EntityManager manager = factory.createEntityManager();
-        //для оновлення даних
-//        sto stoUpdate = manager.find(sto.class, request.getParameter("info_id"));
-//        stoUpdate.setQuality(Integer.valueOf(request.getParameter("quality")));
-//        stoUpdate.setSpeed(Integer.valueOf(request.getParameter("speed")));
-//        stoUpdate.setPrice(Integer.valueOf(request.getParameter("price")));
-//        stoUpdate.setServiceRange(Integer.valueOf(request.getParameter("service_range")));
-//        stoUpdate.setEvaluation(Double.valueOf(request.getParameter("evaluation")));
+
+
+        InputDataCheck check = new InputDataCheck();
+        // Validate latitude and longitude values
+        boolean isValidQuality = check.isValidNumber(request.getParameter("quality"), 0, 10);
+        boolean isValidSpeed = check.isValidNumber(request.getParameter("speed"), 0, 10);
+        boolean isValidPrice = check.isValidNumber(request.getParameter("price"), 0, 10);
+        boolean isValidServiceRange = check.isValidNumber(request.getParameter("service_range"), 0, 10);
+        boolean isValidLat = check.isValidNumber(request.getParameter("lat"), -90, 90);
+        boolean isValidLon = check.isValidNumber(request.getParameter("lon"), -180, 180);
+
+        if (!isValidQuality || !isValidSpeed || !isValidPrice || !isValidServiceRange || !isValidLat || !isValidLon) {
+            // Set the error message in the request attribute
+            request.setAttribute("errorMessage", "Invalid quality, speed, price, service range, latitude or longitude value.");
+
+            // Forward the request back to the JSP page
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/createNewService.jsp");
+            dispatcher.forward(request, response);
+            return;
+        }
+
 
         sto stoInsert = new sto();
         stoInsert.setName(request.getParameter("name"));//id змінювати нельзя в Hibernate

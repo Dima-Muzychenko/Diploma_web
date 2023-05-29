@@ -1,5 +1,7 @@
 package Servlets;
 
+import Check.InputDataCheck;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
@@ -19,6 +21,20 @@ public class WatchServlet extends HttpServlet {
         String lon = request.getParameter("lon");
         String password = request.getParameter("password");
 
+        InputDataCheck check = new InputDataCheck();
+        // Validate latitude and longitude values
+        boolean isValidLat = check.isValidNumber(lat, -90, 90);
+        boolean isValidLon = check.isValidNumber(lon, -180, 180);
+
+        if (!isValidLat || !isValidLon) {
+            // Set the error message in the request attribute
+            request.setAttribute("errorMessage", "Invalid latitude or longitude value.");
+
+            // Forward the request back to the JSP page
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/watchService.jsp");
+            dispatcher.forward(request, response);
+            return;
+        }
         // Perform any necessary processing or validation of the form input
 
         String encodedName = URLEncoder.encode(name, "UTF-8");
@@ -27,4 +43,5 @@ public class WatchServlet extends HttpServlet {
         String redirectURL = "/info?name=" + encodedName + "&lat=" + lat + "&lon=" + lon + "&pass=" + encodedPass;
         response.sendRedirect(redirectURL);
     }
+
 }
