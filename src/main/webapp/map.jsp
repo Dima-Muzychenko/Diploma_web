@@ -1,13 +1,13 @@
 <%--                        Google Map API.                      --%>
 <%@ page import="entity.sto" %>
 <%@ page import="java.util.List" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%@ page import="constants.Constants" %>
 <html>
 <head>
     <title>Map</title>
-    <link rel="stylesheet" type="text/css" href="map.css">
     <jsp:include page="header.jsp" />
+    <link rel="stylesheet" type="text/css" href="map.css">
     <%String myCode = Constants.KEY_API;%>
 
     <script src="https://maps.googleapis.com/maps/api/js?key=<%=myCode%>"></script>

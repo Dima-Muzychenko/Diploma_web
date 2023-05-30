@@ -13,7 +13,7 @@
       <li><a href="/watchService.jsp">Watch Service</a></li>
     </ul>
     <ul class="bot">
-      <li><a href="/Bot">Bot</a></li>
+      <li><a href="https://t.me/creditWorthnessBot">Bot</a></li>
     </ul>
   </nav>
 </header>
