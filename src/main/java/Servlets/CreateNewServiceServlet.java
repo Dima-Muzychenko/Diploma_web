@@ -81,7 +81,7 @@ public class CreateNewServiceServlet extends HttpServlet {
 
 
         GeometryFactory gf = new GeometryFactory(new PrecisionModel(), 4326);
-        Point pgGeo = gf.createPoint(new Coordinate(stoInsert.getLat(), stoInsert.getLon()));
+        Point pgGeo = gf.createPoint(new Coordinate(stoInsert.getLon(), stoInsert.getLat()));
         stoInsert.setGeo(pgGeo);
 
 

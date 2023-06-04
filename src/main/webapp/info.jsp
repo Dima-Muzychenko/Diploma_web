@@ -3,11 +3,11 @@
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="info.css">
-    <title>STO Information</title>
+    <title>Car service information</title>
 </head>
 <body>
 <jsp:include page="header.jsp" />
-<h1>STO Information</h1>
+<h1>Car service information</h1>
 <%
     sto sto1 = (entity.sto) request.getAttribute("sto");
     if (sto1 != null) {
@@ -38,7 +38,7 @@
     <%-- Store the sto object in the session --%>
     <% session.setAttribute("sto1", sto1); %>
     <div class="center-button">
-        <input type="submit" value="Change STO">
+        <input type="submit" value="Change car service">
     </div>
 </form>
 <%
@@ -46,7 +46,7 @@
 %>
 <table>
     <tr>
-        <td>No such sto:</td>
+        <td>No such car service:</td>
     </tr>
 </table>
 <%

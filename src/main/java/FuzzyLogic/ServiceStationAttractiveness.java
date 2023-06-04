@@ -1,6 +1,8 @@
 package FuzzyLogic;
 
 import net.sourceforge.jFuzzyLogic.FIS;
+import net.sourceforge.jFuzzyLogic.plot.JFuzzyChart;
+import net.sourceforge.jFuzzyLogic.rule.RuleBlock;
 
 import java.io.FileNotFoundException;
 
