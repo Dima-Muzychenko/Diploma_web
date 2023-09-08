@@ -17,7 +17,6 @@ public class StoDAO {
 
     public sto getSTOByNameLatLonPass(String name, double lat, double lon, String pass) {
         List<sto> stos = new ArrayList<>();
-
         try {
             Connection conn = DriverManager.getConnection(url, user, password);
             PreparedStatement pstmt = null;
@@ -25,7 +24,6 @@ public class StoDAO {
                     "SELECT * " +
                             "FROM sto " +
                             "WHERE name = ? AND lat = ? AND lon = ? AND password = ?");
-
             pstmt.setString(1, name);
             pstmt.setDouble(2, lat);
             pstmt.setDouble(3, lon); // Convert the radius from kilometers to meters

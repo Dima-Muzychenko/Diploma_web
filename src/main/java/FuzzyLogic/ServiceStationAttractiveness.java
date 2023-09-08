@@ -10,7 +10,7 @@ public class ServiceStationAttractiveness {
 
     public static void main(String[] args) throws FileNotFoundException {
         ServiceStationAttractiveness attractiveness = new ServiceStationAttractiveness();
-        double attract = attractiveness.CountEvaluation(7.56, 3.67, 8, 5);
+        double attract = attractiveness.CountEvaluation(7.56, 8.45, 6.35, 9.545);
     }
         // Load FCL file
 

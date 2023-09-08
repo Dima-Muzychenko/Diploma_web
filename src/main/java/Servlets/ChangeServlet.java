@@ -28,7 +28,6 @@ public class ChangeServlet extends HttpServlet {
         boolean isValidSpeed = check.isValidNumber(request.getParameter("speed"), 0, 10);
         boolean isValidPrice = check.isValidNumber(request.getParameter("price"), 0, 10);
         boolean isValidServiceRange = check.isValidNumber(request.getParameter("service_range"), 0, 10);
-
         if (!isValidQuality || !isValidSpeed || !isValidPrice || !isValidServiceRange) {
             // Set the error message in the request attribute
             request.setAttribute("errorMessage", "Invalid quality, speed, price or service range value. It Should be in range from 0 to 10");
